@@ -34,17 +34,11 @@
 3. 后台「外观 → 自定义 → 站点身份」上传站点 Logo（头部显示 Logo 而非站名文字）
 4. 按需在「外观 → 编辑」中修改 front-page 等模板的板块筛选条件
 
-== Docker 部署（当前线上方式） ==
-目标站 https://www.xt96871.com/ 运行于 SSH 服务器（eous@192.168.0.124）的 Docker 容器 wordpress-wordpress-1：
-
-1. 本地打包（源码目录含 junction 映射到 wp-content/themes/newsportal-fse）：
-   tar -czf newsportal-fse.tar.gz -C .. newsportal-fse
-2. 上传并部署（辅助脚本 _deploy/sshrun.py，paramiko）：
-   python _deploy/sshrun.py --put newsportal-fse.tar.gz /tmp/newsportal-fse.tar.gz
-   python _deploy/sshrun.py "docker cp /tmp/newsportal-fse.tar.gz wordpress-wordpress-1:/tmp/ && docker exec wordpress-wordpress-1 sh -c 'rm -rf /var/www/html/wp-content/themes/newsportal-fse && mkdir -p /var/www/html/wp-content/themes/newsportal-fse && tar -xzf /tmp/newsportal-fse.tar.gz -C /var/www/html/wp-content/themes/ && chown -R www-data:www-data /var/www/html/wp-content/themes/newsportal-fse'"
-3. 激活主题（wp-cli 容器，需传数据库环境变量）：
-   docker run --rm --volumes-from wordpress-wordpress-1 --network container:wordpress-wordpress-1 -e WORDPRESS_DB_HOST=db -e WORDPRESS_DB_USER=wpuser -e WORDPRESS_DB_PASSWORD=wppass123 -e WORDPRESS_DB_NAME=wordpress wordpress:cli wp theme activate newsportal-fse --allow-root
-4. 更新 style.css 后必须在 functions.php 中递增版本号（当前 2.0.0）以破缓存
+== 部署 ==
+1. 打包：`tar -czf newsportal-fse.tar.gz -C /path/to/newsportal-fse .`
+2. 上传压缩包到服务器 wp-content/themes/ 目录并解压，或通过 WordPress 后台「外观 → 主题 → 上传」安装
+3. 激活主题
+4. 更新 style.css 后必须在 functions.php 中递增版本号以破缓存
 
 == 系统要求 ==
 * WordPress ≥ 6.4
@@ -68,5 +62,4 @@ newsportal-fse/
 ├── patterns/          区块图案（hot-news/feed/hot-words/carousel/local-news/related-posts，模板中已展开为普通区块）
 ├── assets/style.css   附加像素级样式（含站点 Logo 样式）
 ├── assets/app.js      文章页点赞/分享交互
-├── _deploy/sshrun.py  SSH 部署辅助脚本（paramiko：执行命令/上传/下载）
 └── screenshot.png     主题缩略图
