@@ -1,0 +1,136 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 2,
+	"settings": {
+		"appearanceTools": true,
+		"layout": {
+			"contentSize": "984px",
+			"wideSize": "984px"
+		},
+		"color": {
+			"custom": true,
+			"palette": [
+				{ "slug": "white", "color": "#FFFFFF", "name": "白色" },
+				{ "slug": "black", "color": "#222222", "name": "正文黑" },
+				{ "slug": "gray-333", "color": "#333333", "name": "深灰" },
+				{ "slug": "gray-666", "color": "#666666", "name": "中灰" },
+				{ "slug": "gray-999", "color": "#999999", "name": "浅灰" },
+				{ "slug": "gray-7b", "color": "#7B7B7B", "name": "文字灰" },
+				{ "slug": "navy", "color": "#01204F", "name": "导航藏青" },
+				{ "slug": "red", "color": "#CC0000", "name": "导航红" },
+				{ "slug": "dot-red", "color": "#DA4453", "name": "头条红点" },
+				{ "slug": "dot-blue", "color": "#7295B7", "name": "焦点蓝点" },
+				{ "slug": "blue", "color": "#3064BB", "name": "主蓝" },
+				{ "slug": "blue-light", "color": "#6D91CF", "name": "浅蓝" },
+				{ "slug": "blue-tab", "color": "#2F63BA", "name": "Tab蓝" },
+				{ "slug": "blue-tip", "color": "#2E61BF", "name": "提示蓝" },
+				{ "slug": "teal", "color": "#17A2B7", "name": "青" },
+				{ "slug": "teal-light", "color": "#53AECF", "name": "浅青" },
+				{ "slug": "search-blue", "color": "#3388FF", "name": "搜索蓝" },
+				{ "slug": "section-navy", "color": "#254282", "name": "章节藏青" }
+			]
+		},
+		"typography": {
+			"fluid": false,
+			"fontFamilies": [
+				{
+					"slug": "base",
+					"name": "正文",
+					"fontFamily": "Arial, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Tahoma, Helvetica, STHeiti, sans-serif"
+				}
+			],
+			"fontSizes": [
+				{ "slug": "small", "size": "12px", "name": "小" },
+				{ "slug": "normal", "size": "14px", "name": "常规" },
+				{ "slug": "medium", "size": "16px", "name": "中" },
+				{ "slug": "large", "size": "18px", "name": "大" },
+				{ "slug": "x-large", "size": "20px", "name": "特大" },
+				{ "slug": "xx-large", "size": "24px", "name": "超大" }
+			]
+		},
+		"spacing": {
+			"units": ["px", "em", "rem", "%", "vw"],
+			"spacingSizes": [
+				{ "slug": "10", "size": "4px", "name": "1" },
+				{ "slug": "20", "size": "8px", "name": "2" },
+				{ "slug": "30", "size": "12px", "name": "3" },
+				{ "slug": "40", "size": "16px", "name": "4" },
+				{ "slug": "50", "size": "24px", "name": "5" },
+				{ "slug": "60", "size": "32px", "name": "6" }
+			]
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "#FFFFFF",
+			"text": "#222222"
+		},
+		"typography": {
+			"fontFamily": "var(--wp--preset--font-family--base)",
+			"fontSize": "14px",
+			"lineHeight": "1.5"
+		},
+		"elements": {
+			"link": {
+				"color": { "text": "#222222" },
+				"typography": { "textDecoration": "none" },
+				":hover": {
+					"color": { "text": "#2E61BF" },
+					"typography": { "textDecoration": "underline" }
+				}
+			},
+			"heading": {
+				"color": { "text": "#222222" },
+				"typography": { "fontWeight": "700", "lineHeight": "1.4" }
+			},
+			"h1": { "typography": { "fontSize": "24px" } },
+			"h2": { "typography": { "fontSize": "20px" } },
+			"h3": { "typography": { "fontSize": "16px" } },
+			"button": {
+				"color": { "background": "#3388FF", "text": "#FFFFFF" },
+				"border": { "radius": "0" },
+				"typography": { "fontSize": "16px" }
+			}
+		},
+		"blocks": {
+			"core/site-title": {
+				"typography": { "fontSize": "32px", "fontWeight": "700" },
+				"color": { "text": "#CC0000" },
+				"elements": {
+					"link": {
+						"color": { "text": "#CC0000" },
+						"typography": { "textDecoration": "none" },
+						":hover": { "color": { "text": "#CC0000" }, "typography": { "textDecoration": "none" } }
+					}
+				}
+			},
+			"core/navigation": {
+				"typography": { "fontSize": "14px", "fontWeight": "700" }
+			},
+			"core/post-title": {
+				"typography": { "fontSize": "16px", "fontWeight": "400", "lineHeight": "1.5" },
+				"elements": {
+					"link": {
+						"color": { "text": "#222222" },
+						"typography": { "textDecoration": "none" },
+						":hover": { "color": { "text": "#2E61BF" }, "typography": { "textDecoration": "underline" } }
+					}
+				}
+			},
+			"core/post-date": {
+				"color": { "text": "#999999" },
+				"typography": { "fontSize": "12px" }
+			},
+			"core/post-terms": {
+				"color": { "text": "#999999" },
+				"typography": { "fontSize": "12px" }
+			},
+			"core/query-title": {
+				"typography": { "fontSize": "20px", "fontWeight": "700" }
+			}
+		},
+		"spacing": {
+			"blockGap": "0"
+		}
+	}
+}

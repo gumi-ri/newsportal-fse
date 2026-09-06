@@ -1,0 +1,89 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","className":"np-main np-article-main","layout":{"type":"default"}} -->
+<main class="wp-block-group np-main np-article-main">
+<!-- wp:group {"className":"np-article-layout","layout":{"type":"default"}} -->
+<div class="wp-block-group np-article-layout">
+
+<!-- wp:group {"className":"np-article","layout":{"type":"constrained","contentSize":"640px"}} -->
+<div class="wp-block-group np-article">
+
+<!-- wp:post-title {"level":1} /-->
+
+<!-- wp:group {"className":"np-article-author","layout":{"type":"flex","flexWrap":"wrap"}} -->
+<div class="wp-block-group np-article-author">
+<!-- wp:shortcode -->
+<p class="np-article-source">文章来源：[np_article_source]</p>
+<!-- /wp:shortcode -->
+<!-- wp:post-date {"format":"Y-m-d H:i","className":"np-article-date"} /-->
+<!-- wp:post-terms {"term":"category","className":"np-article-cats"} /-->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:post-featured-image {"aspectRatio":"16/9","style":{"spacing":{"margin":{"top":"24px"}}}} /-->
+
+<!-- wp:post-content {"layout":{"type":"constrained"}} /-->
+
+<!-- wp:group {"className":"np-article-actions","layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-group np-article-actions">
+<!-- wp:paragraph {"className":"np-action-btn np-action-like"} -->
+<p class="np-action-btn np-action-like">点赞</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"np-action-btn np-action-share"} -->
+<p class="np-action-btn np-action-share">分享</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"aside","className":"np-article-aside","layout":{"type":"constrained"}} -->
+<aside class="wp-block-group np-article-aside">
+
+<!-- wp:group {"className":"np-aside-card"} -->
+<div class="wp-block-group np-aside-card">
+<!-- wp:group {"className":"np-section np-related-wrap","layout":{"type":"constrained"}} -->
+<div class="wp-block-group np-section np-related-wrap">
+<!-- wp:heading {"level":2,"className":"np-sec-title"} -->
+<h2 class="wp-block-heading np-sec-title">相关文章</h2>
+<!-- /wp:heading -->
+
+<!-- wp:query {"queryId":7,"query":{"perPage":5,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"layout":{"type":"default"}} -->
+<div class="wp-block-query np-related-list">
+<!-- wp:post-template {"layout":{"type":"default"}} -->
+<!-- wp:post-title {"isLink":true,"level":3,"className":"np-list-title"} /-->
+<!-- /wp:post-template -->
+</div>
+<!-- /wp:query -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"np-aside-card np-aside-comments"} -->
+<div class="wp-block-group np-aside-card np-aside-comments">
+<!-- wp:comments -->
+<div class="wp-block-comments">
+<!-- wp:comments-title /-->
+<!-- wp:comment-template -->
+<!-- wp:comment-author-name /-->
+<!-- wp:comment-date /-->
+<!-- wp:comment-content /-->
+<!-- wp:comment-reply-link /-->
+<!-- /wp:comment-template -->
+<!-- wp:post-comments-form /-->
+</div>
+<!-- /wp:comments -->
+</div>
+<!-- /wp:group -->
+
+</aside>
+<!-- /wp:group -->
+
+</div>
+<!-- /wp:group -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

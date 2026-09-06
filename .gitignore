@@ -1,0 +1,19 @@
+# 部署工具（本地敏感配置）
+_deploy/
+
+# 项目交接文档（含服务器凭据，不上传）
+continue.md
+
+# 操作系统
+Thumbs.db
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 构建产物
+*.tar.gz
+*.zip
