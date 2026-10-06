@@ -3,22 +3,54 @@
  * 前台与区块编辑器共用
  */
 
-/* ================= 设计令牌（2026-10-06：参照青岛大学官网统一色板） ================= */
-/* 之前各处颜色各自定义（Logo 渐变蓝 / 红点 #da4453 / 橙按钮 / 藏青 #254282），
-   新增板块就多一分混杂。这里收敛为一套可复用变量，后续板块直接引用。 */
+/* =========================================================================
+   VI 设计令牌 —— 以「莲企通」Logo 为中心（2026-10-06 重做）
+   从 Logo 实测取色：蓝渐变 #0038e0 → #3573eb → #b2cff8，橙点缀 #faa433。
+   规则：全站只用「蓝为主 + 橙为点」两色系；组件一律引用下面的语义别名，
+   不再出现第二种蓝、也不再散用红/金/青。
+   ========================================================================= */
 :root {
-	--np-brand: #006098;      /* 导航蓝 */
-	--np-brand-d: #004975;    /* 工具条深蓝 */
-	--np-link: #336699;       /* 正文链接蓝 */
-	--np-link-h: #1a37a0;     /* 链接悬停深蓝 */
-	--np-accent: #c91111;     /* 强调红（标签/角标） */
-	--np-accent-d: #cc0610;   /* 角标红 */
-	--np-gold: #ffbb29;       /* 点缀金 */
-	--np-zebra: #f3f5f8;      /* 斑马纹行底 */
-	--np-ink: #222;           /* 正文 */
-	--np-ink2: #5b6771;       /* 次要文字 */
-	--np-ink3: #848484;       /* 弱化文字 */
-	--np-line: #e6e9ee;       /* 分隔线 */
+	/* —— 品牌蓝阶（源自 Logo 蓝渐变）—— */
+	--np-blue-900: #06215f;
+	--np-blue-800: #0a34a0;
+	--np-blue-700: #0b41c4;
+	--np-blue-600: #0f4fe0;   /* 品牌主色 */
+	--np-blue-500: #2b6cf0;   /* 链接 / 交互 */
+	--np-blue-400: #5b95f5;
+	--np-blue-300: #9dc0fa;
+	--np-blue-100: #e7efff;
+	--np-blue-50:  #f4f8ff;
+
+	/* —— 点缀橙（源自 Logo 橙点）—— */
+	--np-orange-600: #e08a10;
+	--np-orange-500: #faa433;
+	--np-orange-100: #fff4e2;
+
+	/* —— 中性 —— */
+	--np-ink:   #1a1f28;
+	--np-ink2:  #5a6472;
+	--np-ink3:  #8b95a3;
+	--np-line:  #e8ecf2;
+	--np-line2: #f1f4f8;
+	--np-zebra: #f6f8fc;
+
+	/* —— 语义别名（组件只引用这些）—— */
+	--np-brand:      var(--np-blue-600);
+	--np-brand-d:    var(--np-blue-800);
+	--np-brand-deep: var(--np-blue-900);
+	--np-link:       var(--np-blue-500);
+	--np-accent:     var(--np-orange-500);
+	--np-accent-d:   var(--np-orange-600);
+
+	/* Logo 蓝渐变：用于大色块（顶栏 / 页脚 / 活动标记），与字标同源 */
+	--np-grad:      linear-gradient(135deg, #0a34a0 0%, #0f4fe0 58%, #2b6cf0 100%);
+	--np-grad-soft: linear-gradient(135deg, #e7efff 0%, #f4f8ff 100%);
+
+	/* —— 尺寸体系 —— */
+	--np-cw: 1200px;   /* 内容宽度（原 984px 过窄，两侧留白大、三列被压扁） */
+	--np-pad: 24px;    /* 容器统一内边距：顶栏/搜索栏/主体/页脚共用，保证左边缘对齐 */
+	--np-gap: 40px;    /* 板块主栅格列间距 */
+	--np-radius: 10px;
 }
 
 /* ================= 全局 ================= */
@@ -34,25 +66,31 @@ a {
 .np-main,
 .wp-block-group.np-main {
 	background: #fff;
-	padding-top: 12px;
-	max-width: 984px !important;
+	padding-top: 16px;
+	padding-left: var(--np-pad);
+	padding-right: var(--np-pad);
+	max-width: var(--np-cw) !important;
 	width: 100%;
 	margin: 0 auto;
 	box-sizing: border-box;
 }
 
-/* ================= 顶部产品栏（深蓝品牌顶带，参照青大官网） ================= */
+/* ================= 顶部产品栏（Logo 同源渐变顶带） ================= */
+/* 底色直接用 Logo 的蓝渐变，使页头与字标「同源」，是整套 VI 的起点。 */
 .np-topbar {
-	height: 38px;
-	line-height: 38px;
-	background: var(--np-brand-d);
+	height: 40px;
+	line-height: 40px;
+	background: var(--np-grad);
 	border-bottom: none;
 	width: 100%;
 }
 
 .np-topbar-inner {
-	max-width: 984px;
+	max-width: var(--np-cw);
 	margin: 0 auto;
+	padding-left: var(--np-pad);
+	padding-right: var(--np-pad);
+	box-sizing: border-box;
 	display: flex !important;
 	align-items: center;
 	justify-content: space-between;
@@ -89,11 +127,11 @@ a {
 }
 
 .np-topbar-links a:hover {
-	color: var(--np-gold);
+	color: var(--np-accent);
 }
 
 .np-topbar-links .np-cur {
-	color: #666;
+	color: var(--np-ink2);
 	margin-left: 22px;
 }
 
@@ -104,13 +142,13 @@ a {
 }
 
 .np-topbar-user a {
-	color: #333;
+	color: var(--np-ink);
 	text-decoration: underline;
 	margin-left: 12px;
 }
 
 .np-topbar-user a:hover {
-	color: #2e61bf;
+	color: var(--np-link);
 }
 
 /* ================= 搜索栏（全宽吸顶 + 全页阴影） ================= */
@@ -120,19 +158,22 @@ a {
 	z-index: 100;
 	background: #fff;
 	padding: 22px 0 20px;
-	border-bottom: 1px solid #e5e5e5;
+	border-bottom: 1px solid var(--np-line);
 	box-shadow: 0 2px 14px rgba(0, 0, 0, 0.06);
 	width: 100%;
 	overflow: hidden;
 }
 
 .np-searchbar-inner {
-	max-width: 984px;
+	max-width: var(--np-cw);
 	margin: 0 auto;
+	padding-left: var(--np-pad);
+	padding-right: var(--np-pad);
+	box-sizing: border-box;
 	display: grid !important;
 	grid-template-columns: auto auto 1fr auto;
 	align-items: center;
-	column-gap: 14px;
+	column-gap: 16px;
 }
 
 .np-header .wp-block-site-title {
@@ -143,13 +184,13 @@ a {
 .np-header .wp-block-site-title a {
 	font-size: 30px;
 	font-weight: 700;
-	color: #c00;
+	color: var(--np-accent-d);
 	letter-spacing: 1px;
 	white-space: nowrap;
 }
 
 .np-header .wp-block-site-title a:hover {
-	color: #c00;
+	color: var(--np-accent-d);
 }
 
 /* 站点 Logo（替代站点名称文字） */
@@ -193,7 +234,7 @@ a {
 	font-weight: 700;
 	font-size: 24px;
 	letter-spacing: 1px;
-	color: #555;
+	color: var(--np-ink2);
 }
 
 .np-brand-sub {
@@ -231,7 +272,7 @@ a {
 
 .np-searchbar .wp-block-search__inside-wrapper:focus-within {
 	background: #fff;
-	border-color: #4e6ef2;
+	border-color: var(--np-brand);
 	box-shadow: 0 0 0 4px rgba(78, 110, 242, 0.12);
 }
 
@@ -242,7 +283,7 @@ a {
 	border: none;
 	border-radius: 0;
 	background: transparent;
-	color: #333;
+	color: var(--np-ink);
 	font-size: 15px;
 	height: 100%;
 	line-height: 44px;
@@ -275,7 +316,7 @@ a {
 	margin: 0 4px;
 	padding: 0 26px;
 	align-self: center;
-	background: #4e6ef2 !important;
+	background: var(--np-brand) !important;
 	color: #fff !important;
 	border: none;
 	border-radius: 19px;
@@ -286,7 +327,7 @@ a {
 }
 
 .np-searchbar .wp-block-search__button:hover {
-	background: #4160e0 !important;
+	background: var(--np-brand) !important;
 	color: #fff;
 	box-shadow: 0 2px 8px rgba(78, 110, 242, 0.4);
 }
@@ -309,7 +350,7 @@ a {
 	height: 40px;
 	padding: 0 22px;
 	border-radius: 20px;
-	background: linear-gradient(135deg, #ff9a2e 0%, #ff6a00 60%, #ff5000 100%);
+	background: linear-gradient(135deg, var(--np-accent) 0%, var(--np-accent-d) 60%, var(--np-accent-d) 100%);
 	color: #fff;
 	font-size: 14px;
 	font-weight: 600;
@@ -340,8 +381,8 @@ a {
 /* 列宽用 minmax(0, …)：画布/视口不足时可收缩，绝不横向溢出 */
 .np-portal {
 	display: grid;
-	grid-template-columns: minmax(0, 390px) minmax(0, 560px);
-	column-gap: 34px;
+	grid-template-columns: minmax(0, 445px) minmax(0, 1fr);
+	column-gap: 40px;
 	align-items: start;
 }
 
@@ -353,7 +394,7 @@ a {
 
 /* ================= 通用板块标题 ================= */
 .np-section {
-	margin-bottom: 28px !important;
+	margin-bottom: 36px !important;
 }
 
 .np-sec-head {
@@ -453,7 +494,7 @@ a {
 }
 
 .np-switch-city a:hover {
-	color: #2e61bf;
+	color: var(--np-link);
 }
 
 .np-mod-hd {
@@ -463,17 +504,17 @@ a {
 .np-mod-title {
 	font-size: 16px;
 	font-weight: 700;
-	color: #254282;
+	color: var(--np-brand);
 	margin: 0;
 	line-height: 18px;
-	border-left: 2px solid #254282;
+	border-left: 2px solid var(--np-brand);
 	padding-left: 6px;
 }
 
 .np-en {
 	font-size: 12px;
 	font-weight: 400;
-	color: #999;
+	color: var(--np-ink3);
 	text-transform: uppercase;
 	margin-left: 6px;
 }
@@ -501,7 +542,7 @@ a {
 }
 
 .np-empty {
-	color: #999;
+	color: var(--np-ink3);
 	font-size: 13px;
 	padding: 16px 0;
 }
@@ -556,7 +597,7 @@ a {
 .np-refresh-tip {
 	margin: 8px 0 4px;
 	font-size: 12px;
-	color: #2e61bf;
+	color: var(--np-link);
 	padding-left: 40px;
 }
 
@@ -594,7 +635,7 @@ a {
 	height: 5px;
 	align-self: center;
 	margin-right: 9px;
-	background: #da4453;
+	background: var(--np-accent);
 	border-radius: 50%;
 }
 
@@ -613,11 +654,11 @@ a {
 }
 
 .np-hotnews .wp-block-post-title a {
-	color: #222;
+	color: var(--np-ink);
 }
 
 .np-hotnews .wp-block-post-title a:hover {
-	color: #2e61bf;
+	color: var(--np-link);
 	text-decoration: underline;
 }
 
@@ -655,7 +696,7 @@ a {
 	transform: translateY(-50%);
 	width: 3px;
 	height: 3px;
-	background: #7295b7;
+	background: var(--np-blue-400);
 }
 
 .np-focuslist .wp-block-post:first-of-type .wp-block-post-title {
@@ -664,7 +705,7 @@ a {
 }
 
 .np-focuslist .wp-block-post-title a {
-	color: #222;
+	color: var(--np-ink);
 }
 
 .np-focuslist .wp-block-post-title a:hover {
@@ -701,7 +742,7 @@ a {
 .np-feed-item {
 	gap: 15px;
 	padding: 20px 0 0;
-	border-bottom: 1px solid #f2f2f2;
+	border-bottom: 1px solid var(--np-line2);
 	align-items: flex-start;
 	min-height: 86px;
 }
@@ -732,11 +773,11 @@ a {
 }
 
 .np-feed-item .wp-block-post-title a:hover {
-	color: #369;
+	color: var(--np-link);
 }
 
 .np-item-meta {
-	color: #999;
+	color: var(--np-ink3);
 	font-size: 12px;
 	line-height: 18px;
 	margin: 0;
@@ -745,7 +786,7 @@ a {
 .np-feed-more {
 	margin: 0;
 	text-align: center;
-	border-bottom: 1px solid #e5e5e5;
+	border-bottom: 1px solid var(--np-line);
 }
 
 .np-feed-more a {
@@ -754,7 +795,7 @@ a {
 	line-height: 44px;
 	font-size: 16px;
 	font-weight: 700;
-	color: #2565ac;
+	color: var(--np-link);
 }
 
 .np-feed-more a:hover {
@@ -763,11 +804,13 @@ a {
 }
 
 /* ================= 大图轮播（右栏，自动淡入淡出） ================= */
+/* 宽度改为自适应右栏（原写死 560px，容器加宽后右侧会留空），
+   比例 2:1 更贴横幅观感，图片 object-fit:cover 不受影响。 */
 .np-carousel {
 	position: relative;
 	width: 100%;
-	max-width: 560px;
-	aspect-ratio: 560 / 305;
+	max-width: 100%;
+	aspect-ratio: 2 / 1;
 	height: auto;
 	overflow: hidden;
 }
@@ -878,16 +921,16 @@ a {
 	text-decoration: none;
 }
 
-.np-hw-c0 { background: #3064bb; }
-.np-hw-c1 { background: #6d91cf; }
-.np-hw-c2 { background: #3064bb; }
-.np-hw-c3 { background: #3064bb; }
-.np-hw-c4 { background: #6d91cf; }
-.np-hw-c5 { background: #3064bb; }
-.np-hw-c6 { background: #6d91cf; }
-.np-hw-c7 { background: #3064bb; }
-.np-hw-c8 { background: #3064bb; }
-.np-hw-c9 { background: #6d91cf; }
+.np-hw-c0 { background: var(--np-link); }
+.np-hw-c1 { background: var(--np-blue-400); }
+.np-hw-c2 { background: var(--np-link); }
+.np-hw-c3 { background: var(--np-link); }
+.np-hw-c4 { background: var(--np-blue-400); }
+.np-hw-c5 { background: var(--np-link); }
+.np-hw-c6 { background: var(--np-blue-400); }
+.np-hw-c7 { background: var(--np-link); }
+.np-hw-c8 { background: var(--np-link); }
+.np-hw-c9 { background: var(--np-blue-400); }
 
 .np-hot-word:hover {
 	background-color: #055c6f;
@@ -896,17 +939,20 @@ a {
 }
 
 /* ================= 本地新闻三列（Grid 布局，编辑器友好） ================= */
-/* DOM 顺序：本地焦点 385 / 新闻资讯 290 / 新闻图片 240（与原 float 视觉一致） */
-/* 列宽用 minmax(0, …)：画布/视口不足时可收缩，绝不横向溢出 */
+/* 板块两列：主列「最新资讯」（含首条图文大卡） + 次列「更多资讯」。
+   列宽用 fr 比例而非固定 px —— 容器加宽/收窄时两列按比例自动伸缩。
+   2026-10-06：原为「最新 385 / 更多 290 / 图片 240」三个固定列，
+   其中「新闻图片」列取「最新一篇带特色图的文章」，与「最新资讯」列表首条
+   重复（实测 tag31 下同一篇 id=3243 在页面出现两次）——已删除该列，
+   改由主列首条直接承载图片，既去重、又让图片有了像样的版位。 */
 .np-local-cols {
 	display: grid;
-	grid-template-columns: minmax(0, 385px) minmax(0, 290px) minmax(0, 240px);
-	column-gap: 24px;
+	grid-template-columns: minmax(0, 1.32fr) minmax(0, 1fr);
+	column-gap: var(--np-gap);
 	align-items: start;
 }
 
 .np-local-focus-col,
-.np-local-pic-col,
 .np-local-zixun-col {
 	min-width: 0;
 }
@@ -914,27 +960,30 @@ a {
 /* 板块内的「最新资讯 / 更多资讯」列表
    —— 2026-10-06 参照青大官网通知公告区改版：
       左侧日期条 + 奇偶行斑马纹 + 悬停浅蓝底，长列表可高速扫读。
-      （原为 1-8 序号徽章；日期比序号更能表达资讯的时效性） */
+      行距统一用「等高 padding + 底部细线」，不靠 margin 堆叠，避免间距忽大忽小。 */
 .np-local-focus .wp-block-post,
 .np-local-zixun .wp-block-post {
 	list-style: none;
 	margin: 0;
 	display: flex;
 	align-items: flex-start;
-	gap: 10px;
-	padding: 9px 10px;
-	border-bottom: 1px solid #f0f2f5;
+	gap: 12px;
+	padding: 11px 12px;
+	border-bottom: 1px solid var(--np-line2);
 	transition: background 0.15s ease;
 }
 
-.np-local-focus .wp-block-post:nth-child(odd),
-.np-local-zixun .wp-block-post:nth-child(odd) {
+/* 斑马纹：从「第 2 行」开始交替。
+   首行是图文大卡（自身白底），若仍按 odd 上色会导致大卡后连续两行都是白底、
+   斑马节奏断档 —— 故此处用 even。 */
+.np-local-focus .wp-block-post:nth-child(even),
+.np-local-zixun .wp-block-post:nth-child(even) {
 	background: var(--np-zebra);
 }
 
 .np-local-focus .wp-block-post:hover,
 .np-local-zixun .wp-block-post:hover {
-	background: #e8f2f9;
+	background: var(--np-blue-100);
 }
 
 /* 日期条 */
@@ -945,7 +994,7 @@ a {
 	background: #fff;
 	border: 1px solid var(--np-line);
 	border-radius: 4px;
-	padding: 1px 7px;
+	padding: 2px 7px;
 	line-height: 18px;
 	font-variant-numeric: tabular-nums;
 	letter-spacing: 0.02em;
@@ -954,6 +1003,7 @@ a {
 .np-local-focus .np-list-title,
 .np-local-zixun .np-list-title {
 	flex: 1;
+	min-width: 0;
 	margin: 0;
 	font-size: 14px;
 	font-weight: 400;
@@ -969,52 +1019,80 @@ a {
 	text-decoration: underline;
 }
 
-/* 本地新闻图片（大图 + 底部遮罩标题） */
-.np-local-pic .wp-block-post {
-	list-style: none;
+/* ---------- 两列首条：图文大卡（左列为「主图」，右列略小以形成主次） ---------- */
+/* 特色图默认隐藏：只有 :first-of-type 才展开，其余条目保持纯文字行 */
+.np-list-thumb {
+	display: none;
 }
 
-.np-local-pic-item {
-	position: relative;
+/* 首卡左右内边距与普通行一致（12px），
+   使「大卡日期条 / 普通行日期条 / 子栏目标题」三者左边缘严格对齐。
+   此前大卡无左右内边距，比列表行左凸 12px，视觉上明显「没对齐」。 */
+.np-local-focus .wp-block-post:first-of-type,
+.np-local-zixun .wp-block-post:first-of-type {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	gap: 10px 12px;
+	padding: 0 12px 12px;
+	background: #fff;
+	border-bottom: 1px solid var(--np-line2);
+}
+
+.np-local-focus .wp-block-post:first-of-type .np-list-thumb,
+.np-local-zixun .wp-block-post:first-of-type .np-list-thumb {
+	display: block;
+	flex: 0 0 100%;
 	width: 100%;
-	max-width: 240px;
-	aspect-ratio: 240 / 160;
-	height: auto;
-	overflow: hidden;
-}
-
-.np-local-pic-item .wp-block-post-featured-image {
-	position: absolute;
-	inset: 0;
 	margin: 0;
+	border-radius: var(--np-radius);
+	overflow: hidden;
+	background: var(--np-grad-soft);
 }
 
-.np-local-pic-item .wp-block-post-featured-image img {
+.np-local-focus .wp-block-post:first-of-type .np-list-thumb img {
+	display: block;
 	width: 100%;
-	height: 100%;
+	height: auto;
+	max-height: 268px;
 	object-fit: cover;
 }
 
-.np-local-pic-title {
-	position: absolute;
-	left: 0;
-	bottom: 0;
+.np-local-zixun .wp-block-post:first-of-type .np-list-thumb img {
+	display: block;
 	width: 100%;
-	margin: 0;
-	padding: 22px 9px 8px;
-	background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+	height: auto;
+	max-height: 150px;
+	object-fit: cover;
 }
 
-.np-local-pic-title a {
+.np-local-focus .wp-block-post:first-of-type .np-list-date,
+.np-local-zixun .wp-block-post:first-of-type .np-list-date {
+	flex: 0 0 auto;
+	margin-top: 2px;
+	background: var(--np-brand);
+	border-color: var(--np-brand);
 	color: #fff;
-	font-size: 12px;
 }
 
-.np-local-pic-title a:hover {
-	color: #fff;
+.np-local-focus .wp-block-post:first-of-type .np-list-title {
+	flex: 1 1 0;
+	min-width: 0;
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1.5;
 }
 
-/* 本地新闻资讯 —— 行样式与「最新资讯」共用上方统一规则（日期条 + 斑马纹），此处不再单独覆盖 */
+.np-local-zixun .wp-block-post:first-of-type .np-list-title {
+	flex: 1 1 0;
+	min-width: 0;
+	font-size: 15px;
+	font-weight: 700;
+	line-height: 1.45;
+}
+
+/* 原「新闻图片」列样式已随该列模板一并移除（2026-10-06 重排为两列，
+   图片并入主列首条大卡，见上方 .np-list-thumb 规则）。 */
 
 /* 图片日期角标：蓝底「日」+ 红底「月」（参照青大官网图片位）
    通用选择器——板块「新闻图片」位与右栏大图轮播共用同一套角标。 */
@@ -1035,7 +1113,7 @@ a {
 }
 
 .np-pic-day {
-	background: var(--np-link-h);
+	background: var(--np-blue-600);
 	color: #fff;
 	font-size: 19px;
 	font-weight: 700;
@@ -1065,25 +1143,25 @@ a {
 /* ================= 归档/搜索/博客列表页（卡片式信息流） ================= */
 /* 页头：蓝色竖条大标题 + 副题 + 底部细线 */
 .np-listing .np-list-head {
-	border-bottom: 1px solid #f0f0f0;
+	border-bottom: 1px solid var(--np-line2);
 	margin-bottom: 24px;
 }
 
 .np-listing .np-page-title {
 	font-size: 24px;
 	font-weight: 700;
-	color: #1a1a1a;
+	color: var(--np-ink);
 	line-height: 30px;
 	margin: 0;
 	padding-left: 12px;
-	border-left: 4px solid #4e6ef2;
+	border-left: 4px solid var(--np-brand);
 }
 
 .np-listing .np-list-sub {
 	margin: 8px 0 18px;
 	padding-left: 16px;
 	font-size: 13px;
-	color: #999;
+	color: var(--np-ink3);
 }
 
 /* 信息流条目：白卡 + 圆角 + 悬停浮起 */
@@ -1094,7 +1172,7 @@ a {
 
 .np-listing .np-feed-item {
 	background: #fff;
-	border: 1px solid #f0f0f0;
+	border: 1px solid var(--np-line2);
 	border-radius: 12px;
 	padding: 18px 20px;
 	min-height: 0;
@@ -1105,7 +1183,7 @@ a {
 }
 
 .np-listing .np-feed-item:hover {
-	border-color: #d8dcf0;
+	border-color: var(--np-blue-300);
 	box-shadow: 0 4px 16px rgba(78, 110, 242, 0.1);
 	transform: translateY(-1px);
 }
@@ -1133,11 +1211,11 @@ a {
 }
 
 .np-listing .np-feed-item .wp-block-post-title a {
-	color: #1a1a1a;
+	color: var(--np-ink);
 }
 
 .np-listing .np-feed-item .wp-block-post-title a:hover {
-	color: #4e6ef2;
+	color: var(--np-brand);
 	text-decoration: none;
 }
 
@@ -1148,31 +1226,31 @@ a {
 }
 
 .np-listing .wp-block-query-pagination .page-numbers {
-	color: #333;
+	color: var(--np-ink);
 	padding: 6px 14px;
-	border: 1px solid #e5e5e5;
+	border: 1px solid var(--np-line);
 	border-radius: 16px;
 	background: #fff;
 	transition: all 0.2s ease;
 }
 
 .np-listing .wp-block-query-pagination .page-numbers:hover {
-	color: #4e6ef2;
-	border-color: #4e6ef2;
+	color: var(--np-brand);
+	border-color: var(--np-brand);
 	text-decoration: none;
 }
 
 .np-listing .wp-block-query-pagination .page-numbers.current {
 	color: #fff;
-	background: #4e6ef2;
-	border-color: #4e6ef2;
+	background: var(--np-brand);
+	border-color: var(--np-brand);
 	font-weight: 600;
 }
 
 /* 空态：居中提示 */
 .np-listing .np-empty {
 	text-align: center;
-	color: #999;
+	color: var(--np-ink3);
 	font-size: 14px;
 	padding: 56px 0 40px;
 	margin: 0;
@@ -1218,18 +1296,18 @@ a {
 .np-404 .np-404-title {
 	font-size: 26px;
 	font-weight: 600;
-	color: #1a1a1a;
+	color: var(--np-ink);
 	margin: 16px 0 10px;
 }
 
 .np-404 .np-404-desc {
 	font-size: 14px;
-	color: #999;
+	color: var(--np-ink3);
 	margin: 0 0 28px;
 }
 
 .np-404 .np-404-hotwords {
-	max-width: 984px;
+	max-width: var(--np-cw);
 	margin: 0 auto;
 }
 
@@ -1258,7 +1336,7 @@ a {
 /* 右侧栏卡片：圆角白卡 + 细边框 + 轻投影 */
 .np-aside-card {
 	background: #fff;
-	border: 1px solid #f0f0f0;
+	border: 1px solid var(--np-line2);
 	border-radius: 12px;
 	padding: 20px 20px 12px;
 	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
@@ -1274,11 +1352,11 @@ a {
 .np-aside-comments .wp-block-comments-title {
 	font-size: 16px;
 	font-weight: 600;
-	color: #1a1a1a;
+	color: var(--np-ink);
 	line-height: 20px;
 	margin: 0 0 14px;
 	padding-left: 10px;
-	border-left: 3px solid #4e6ef2;
+	border-left: 3px solid var(--np-brand);
 }
 
 /* 标题（覆盖列表用的 post-title 全局小字设定） */
@@ -1286,7 +1364,7 @@ a {
 	font-size: 28px !important;
 	font-weight: 600 !important;
 	line-height: 1.5 !important;
-	color: #1a1a1a;
+	color: var(--np-ink);
 	margin: 0 0 16px;
 }
 
@@ -1295,14 +1373,14 @@ a {
 	align-items: center;
 	gap: 14px;
 	padding: 6px 0 20px;
-	border-bottom: 1px solid #f0f0f0;
+	border-bottom: 1px solid var(--np-line2);
 }
 
 /* 文章来源（替代原作者行） */
 .np-article-author .np-article-source {
 	margin: 0;
 	font-size: 13px;
-	color: #999;
+	color: var(--np-ink3);
 }
 
 .np-article-author .np-article-source span {
@@ -1310,14 +1388,14 @@ a {
 	padding: 1px 10px;
 	border-radius: 3px;
 	background: #f2f6ff;
-	color: #2e61bf;
+	color: var(--np-link);
 	font-weight: 500;
 }
 
 .np-article-author .np-article-date,
 .np-article-author .np-article-cats {
 	font-size: 13px;
-	color: #999;
+	color: var(--np-ink3);
 	margin: 0;
 }
 
@@ -1330,7 +1408,7 @@ a {
 .np-article .wp-block-post-content {
 	font-size: 17px;
 	line-height: 1.8;
-	color: #333;
+	color: var(--np-ink);
 }
 
 .np-article .wp-block-post-content p {
@@ -1340,14 +1418,14 @@ a {
 .np-article .wp-block-post-content h2 {
 	font-size: 20px;
 	font-weight: 600;
-	color: #1a1a1a;
+	color: var(--np-ink);
 	margin: 1.9em 0 1em;
 }
 
 .np-article .wp-block-post-content h3 {
 	font-size: 18px;
 	font-weight: 600;
-	color: #1a1a1a;
+	color: var(--np-ink);
 	margin: 1.7em 0 0.9em;
 }
 
@@ -1359,15 +1437,15 @@ a {
 }
 
 .np-article .wp-block-post-content a {
-	color: #4e6ef2;
+	color: var(--np-brand);
 }
 
 .np-article .wp-block-post-content blockquote {
 	margin: 1.5em 0;
 	padding: 12px 20px;
-	border-left: 3px solid #4e6ef2;
-	background: #f7f8fa;
-	color: #555;
+	border-left: 3px solid var(--np-brand);
+	background: var(--np-zebra);
+	color: var(--np-ink2);
 }
 
 .np-article .wp-block-post-content blockquote p {
@@ -1378,7 +1456,7 @@ a {
 .np-article-actions {
 	margin-top: 36px;
 	padding-top: 26px;
-	border-top: 1px solid #f0f0f0;
+	border-top: 1px solid var(--np-line2);
 	gap: 18px;
 }
 
@@ -1389,8 +1467,8 @@ a {
 	line-height: 38px;
 	border: 1px solid #dcdfe6;
 	border-radius: 20px;
-	background: #f7f8fa;
-	color: #555;
+	background: var(--np-zebra);
+	color: var(--np-ink2);
 	font-size: 14px;
 	cursor: pointer;
 	transition: all 0.2s ease;
@@ -1413,16 +1491,16 @@ a {
 }
 
 .np-article-actions .np-action-btn:hover {
-	border-color: #4e6ef2;
-	color: #4e6ef2;
+	border-color: var(--np-brand);
+	color: var(--np-brand);
 	background-color: #fff;
 	box-shadow: 0 2px 10px rgba(78, 110, 242, 0.15);
 }
 
 /* 点赞后状态（JS 切换）：蓝底白字 + 数字 */
 .np-article-actions .np-action-btn.np-liked {
-	background: #4e6ef2 !important;
-	border-color: #4e6ef2;
+	background: var(--np-brand) !important;
+	border-color: var(--np-brand);
 	color: #fff !important;
 }
 
@@ -1436,7 +1514,7 @@ a {
 .np-article-aside .np-related-list .wp-block-post {
 	margin: 0;
 	padding: 9px 0;
-	border-bottom: 1px dashed #f0f0f0;
+	border-bottom: 1px dashed var(--np-line2);
 	list-style: none;
 }
 
@@ -1449,7 +1527,7 @@ a {
 	font-size: 14px;
 	font-weight: 400;
 	line-height: 22px;
-	color: #333;
+	color: var(--np-ink);
 }
 
 .np-article-aside .np-related-list .np-list-title::before {
@@ -1457,14 +1535,14 @@ a {
 	display: inline-block;
 	width: 4px;
 	height: 4px;
-	background: #4e6ef2;
+	background: var(--np-brand);
 	border-radius: 50%;
 	margin-right: 10px;
 	vertical-align: 3px;
 }
 
 .np-article-aside .np-related-list .np-list-title a:hover {
-	color: #4e6ef2;
+	color: var(--np-brand);
 }
 
 /* 右侧栏 · 评论区：紧凑排版 */
@@ -1475,7 +1553,7 @@ a {
 .np-aside-comments .wp-block-comment {
 	margin: 0;
 	padding: 10px 0;
-	border-bottom: 1px dashed #f0f0f0;
+	border-bottom: 1px dashed var(--np-line2);
 	font-size: 13px;
 }
 
@@ -1486,48 +1564,48 @@ a {
 .np-aside-comments .wp-block-comment-author-name {
 	font-weight: 600;
 	font-size: 13px;
-	color: #1a1a1a;
+	color: var(--np-ink);
 }
 
 .np-aside-comments .wp-block-comment-author-name a {
-	color: #1a1a1a;
+	color: var(--np-ink);
 }
 
 .np-aside-comments .wp-block-comment-date {
-	color: #999;
+	color: var(--np-ink3);
 	font-size: 12px;
 }
 
 .np-aside-comments .wp-block-comment-content p {
 	margin: 4px 0 0;
-	color: #333;
+	color: var(--np-ink);
 	line-height: 1.6;
 	font-size: 13px;
 }
 
 .np-aside-comments .comment-reply-link {
 	font-size: 12px;
-	color: #4e6ef2;
+	color: var(--np-brand);
 }
 
 /* 回复表单：小输入框 + 蓝色提交按钮 */
 .np-aside-comments .comment-respond {
 	margin-top: 14px;
 	padding-top: 14px;
-	border-top: 1px solid #f0f0f0;
+	border-top: 1px solid var(--np-line2);
 }
 
 .np-aside-comments .comment-reply-title {
 	font-size: 14px;
 	font-weight: 600;
-	color: #1a1a1a;
+	color: var(--np-ink);
 	margin: 0 0 10px;
 }
 
 .np-aside-comments .comment-form p {
 	margin: 0 0 10px;
 	font-size: 12px;
-	color: #666;
+	color: var(--np-ink2);
 }
 
 .np-aside-comments .comment-form input[type="text"],
@@ -1535,11 +1613,11 @@ a {
 .np-aside-comments .comment-form input[type="url"],
 .np-aside-comments .comment-form textarea {
 	width: 100%;
-	border: 1px solid #e5e5e5;
+	border: 1px solid var(--np-line);
 	border-radius: 8px;
 	padding: 8px 12px;
 	font-size: 13px;
-	color: #333;
+	color: var(--np-ink);
 	background: #fafafa;
 	box-sizing: border-box;
 	transition: border-color 0.2s ease, background 0.2s ease;
@@ -1548,7 +1626,7 @@ a {
 .np-aside-comments .comment-form input:focus,
 .np-aside-comments .comment-form textarea:focus {
 	outline: none;
-	border-color: #4e6ef2;
+	border-color: var(--np-brand);
 	background: #fff;
 }
 
@@ -1558,7 +1636,7 @@ a {
 }
 
 .np-aside-comments .comment-form .submit {
-	background: #4e6ef2;
+	background: var(--np-brand);
 	color: #fff;
 	border: none;
 	border-radius: 16px;
@@ -1569,7 +1647,7 @@ a {
 }
 
 .np-aside-comments .comment-form .submit:hover {
-	background: #4160e0;
+	background: var(--np-brand);
 }
 
 .np-aside-comments .comment-form .logged-in-as,
@@ -1584,12 +1662,12 @@ a {
 }
 
 .np-main .wp-block-query-pagination .page-numbers {
-	color: #222;
+	color: var(--np-ink);
 	padding: 4px 10px;
 }
 
 .np-main .wp-block-query-pagination .page-numbers:hover {
-	color: #2e61bf;
+	color: var(--np-link);
 }
 
 .np-main .wp-block-query-pagination .page-numbers.current {
@@ -1599,17 +1677,21 @@ a {
 
 /* ================= 响应式 ================= */
 /* 编辑器画布宽度即视口宽度：所有断点对前台窄屏与编辑器画布同时生效 */
-@media (max-width: 1040px) {
+@media (max-width: 1100px) {
+	/* 平板：首屏双栏收为单栏（TODAY 与右栏轮播上下排），板块仍保持两列 */
 	.np-portal {
 		grid-template-columns: minmax(0, 1fr);
 		column-gap: 0;
-		row-gap: 24px;
+		row-gap: 28px;
 	}
+}
 
+@media (max-width: 880px) {
+	/* 竖屏平板 / 大手机：板块两列收为单列 */
 	.np-local-cols {
 		grid-template-columns: minmax(0, 1fr);
 		column-gap: 0;
-		row-gap: 28px;
+		row-gap: 24px;
 	}
 
 	/* 文章页：侧栏改为随文流堆叠 */
@@ -1624,15 +1706,14 @@ a {
 }
 
 @media (max-width: 782px) {
-	.np-searchbar {
-		position: static;
+	/* 小屏统一收窄容器内边距：顶栏 / 搜索栏 / 主体 / 页脚四者同时生效，
+	   否则各自为政会出现「左边缘对不齐」的观感问题。 */
+	:root {
+		--np-pad: 14px;
 	}
 
-	/* 主体内容加左右边距，避免贴边 */
-	.np-main,
-	.wp-block-group.np-main {
-		padding-left: 12px;
-		padding-right: 12px;
+	.np-searchbar {
+		position: static;
 	}
 
 	.np-searchbar-inner {
@@ -1642,7 +1723,6 @@ a {
 			"brand video"
 			"search search";
 		gap: 12px;
-		padding: 0 12px;
 	}
 
 	/* logo 左、看视频按钮右同行排列，超出可收缩，不被 overflow:hidden 裁剪 */
@@ -1703,7 +1783,7 @@ a {
 	.np-topbar {
 		height: auto;
 		line-height: 1.5;
-		padding: 6px 12px;
+		padding: 6px var(--np-pad);
 	}
 
 	.np-topbar-inner {
@@ -1782,14 +1862,14 @@ a {
 	width: 100%;
 	border-radius: 8px;
 	overflow: hidden;
-	border: 1px solid #f0f0f0;
+	border: 1px solid var(--np-line2);
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
-	background: #f7f8fa;
+	background: var(--np-zebra);
 	transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .np-ad-slot .np-ad-link:hover {
-	border-color: #d8dcf0;
+	border-color: var(--np-blue-300);
 	box-shadow: 0 4px 16px rgba(78, 110, 242, 0.12);
 }
 
@@ -1804,7 +1884,7 @@ a {
 	align-items: center;
 	justify-content: center;
 	min-height: 120px;
-	color: #999;
+	color: var(--np-ink3);
 	font-size: 14px;
 	letter-spacing: 2px;
 }
@@ -1814,8 +1894,8 @@ a {
    注意：footer 模板部件在 .np-main 之外，故用 max-width:none 让底色通栏，
    再靠 .np-footer-inner 收敛内容宽度。 */
 .np-footer {
-	background: var(--np-brand-d);
-	color: #cfe0ec;
+	background: linear-gradient(160deg, #07256e 0%, #0a34a0 58%, #0b41c4 100%);
+	color: var(--np-blue-300);
 	margin: 0 !important;
 	padding: 0 !important;
 	max-width: none !important;
@@ -1828,12 +1908,13 @@ a {
 }
 
 .np-footer-inner {
-	max-width: 984px;
+	max-width: var(--np-cw);
 	margin: 0 auto !important;
+	padding: 32px var(--np-pad) 26px;
+	box-sizing: border-box;
 	display: grid !important;
 	grid-template-columns: 1.4fr 1fr auto;
-	gap: 30px;
-	padding: 26px 0 22px;
+	gap: 40px;
 	align-items: start;
 }
 
@@ -1848,7 +1929,7 @@ a {
 .np-foot-line {
 	margin: 0 0 6px;
 	font-size: 12.5px;
-	color: #bcd4e4;
+	color: var(--np-blue-300);
 	line-height: 1.7;
 }
 
@@ -1865,13 +1946,13 @@ a {
 .np-foot-links a {
 	display: inline-block;
 	margin: 0 16px 7px 0;
-	color: #bcd4e4;
+	color: var(--np-blue-300);
 	font-size: 12.5px;
 	transition: color 0.15s ease;
 }
 
 .np-foot-links a:hover {
-	color: var(--np-gold);
+	color: var(--np-accent);
 }
 
 .np-foot-brand {
@@ -1897,7 +1978,7 @@ a {
 .np-foot-slogan {
 	margin: 0;
 	font-size: 12px;
-	color: #9dc4dd;
+	color: rgba(255,255,255,.62);
 }
 
 .np-footer-bar {
@@ -1906,19 +1987,19 @@ a {
 }
 
 .np-foot-copy {
-	max-width: 984px;
+	max-width: var(--np-cw);
 	margin: 0 auto !important;
 	padding: 11px 0;
 	font-size: 12px;
-	color: #9dc4dd;
+	color: rgba(255,255,255,.62);
 	text-align: center;
 }
 
 @media (max-width: 782px) {
 	.np-footer-inner {
 		grid-template-columns: 1fr;
-		gap: 18px;
-		padding: 22px 12px;
+		gap: 20px;
+		padding: 24px var(--np-pad);
 	}
 
 	.np-foot-brand {
