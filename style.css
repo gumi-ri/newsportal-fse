@@ -1,10 +1,10 @@
 /*
 Theme Name: NewsPortal FSE
-Theme URI: https://example.com/newsportal-fse
+Theme URI: https://github.com/gumi-ri/newsportal-fse
 Author: NewsPortal
-Author URI: https://example.com
-Description: 百度新闻(news.baidu.com)布局风格的门户新闻区块主题（FSE）。顶部频道导航 + 左栏热点要闻/推荐信息流 + 右栏热搜榜/本地新闻/新闻图片/图文资讯/热门点击。已适配部署于湘潭产业新闻站 莲企通（https://www.xt96871.com/）。
-Version: 1.1.1
+Author URI: https://github.com/gumi-ri
+Description: 门户新闻风格的 WordPress 区块主题（全站编辑 FSE），通用新闻网站模板。顶部频道导航 + 左栏最新/焦点信息流 + 右栏大图轮播与热搜词 + 通栏多列新闻板块，附文章页、归档、搜索与 404 模板。不绑定任何特定站点，不含任何品牌或地方信息，站点名称、栏目与配色均由使用方自行配置。
+Version: 2.0.0
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 7.2

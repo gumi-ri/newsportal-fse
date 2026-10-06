@@ -1,10 +1,10 @@
 <?php
 /**
- * Title: 本地新闻
+ * Title: 综合资讯
  * Slug: newsportal/local-news
  * Categories: newsportal
- * Description: 通栏「本地新闻 LOCAL NEWS」三列：本地焦点(带序号，本地分类) / 新闻图片(大图，图片分类) / 新闻资讯(热门分类)。
- * Keywords: 本地, 新闻, 城市
+ * Description: 通栏「综合资讯 NEWS」三列：焦点资讯(列表) / 新闻图片(大图) / 更多资讯(列表)。分类由站点自行创建后在编辑器「筛选条件」中绑定。
+ * Keywords: 资讯, 新闻, 板块
  */
 $np_bendi  = get_term_by( 'slug', 'bendi', 'category' );
 $np_bendi  = $np_bendi ? (int) $np_bendi->term_id : 0;
@@ -19,7 +19,7 @@ $np_remen  = $np_remen ? (int) $np_remen->term_id : 0;
 <!-- wp:group {"className":"np-sec-head","layout":{"type":"flex","justifyContent":"space-between","verticalAlignment":"center"}} -->
 <div class="wp-block-group np-sec-head">
 <!-- wp:heading {"level":2,"className":"np-sec-title"} -->
-<h2 class="wp-block-heading np-sec-title">本地新闻 <span class="np-sec-en">LOCAL NEWS</span></h2>
+<h2 class="wp-block-heading np-sec-title">综合资讯 <span class="np-sec-en">NEWS</span></h2>
 <!-- /wp:heading -->
 </div>
 <!-- /wp:group -->
@@ -29,7 +29,7 @@ $np_remen  = $np_remen ? (int) $np_remen->term_id : 0;
 <!-- wp:group {"className":"np-local-focus-col","layout":{"type":"default"}} -->
 <div class="wp-block-group np-local-focus-col">
 <!-- wp:heading {"level":3,"className":"np-sub-title"} -->
-<h3 class="wp-block-heading np-sub-title">本地焦点</h3>
+<h3 class="wp-block-heading np-sub-title">焦点资讯</h3>
 <!-- /wp:heading -->
 <!-- wp:query {"queryId":25,"query":{"perPage":8,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"category":[<?php echo (int) $np_bendi; ?>]}},"layout":{"type":"default"}} -->
 <div class="wp-block-query np-local-focus">

@@ -13,12 +13,12 @@
 <!-- wp:group {"className":"np-tab","layout":{"type":"flex","flexWrap":"nowrap"}} -->
 <div class="wp-block-group np-tab">
 <!-- wp:paragraph {"className":"np-tab-item np-tab-active"} -->
-<p class="np-tab-item np-tab-active">TODAY</p>
+<p class="np-tab-item np-tab-active">热点要闻</p>
 <!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 
-<!-- wp:query {"queryId":21,"query":{"perPage":6,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[21]}},"layout":{"type":"default"},"className":"np-hotnews"} -->
+<!-- wp:query {"queryId":21,"query":{"perPage":6,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"layout":{"type":"default"},"className":"np-hotnews"} -->
 <div class="wp-block-query np-hotnews">
 <!-- wp:post-template {"layout":{"type":"default"}} -->
 <!-- wp:post-title {"isLink":true} /-->
@@ -26,7 +26,7 @@
 </div>
 <!-- /wp:query -->
 
-<!-- wp:query {"queryId":22,"query":{"perPage":8,"pages":0,"offset":6,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[21]}},"layout":{"type":"default"},"className":"np-focuslist"} -->
+<!-- wp:query {"queryId":22,"query":{"perPage":8,"pages":0,"offset":6,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"layout":{"type":"default"},"className":"np-focuslist"} -->
 <div class="wp-block-query np-focuslist">
 <!-- wp:post-template {"layout":{"type":"default"}} -->
 <!-- wp:post-title {"isLink":true} /-->
@@ -44,7 +44,7 @@
 
 <!-- wp:group {"className":"np-section np-carousel-wrap","layout":{"type":"constrained"}} -->
 <div class="wp-block-group np-section np-carousel-wrap">
-<!-- wp:query {"queryId":24,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[27]}},"layout":{"type":"default"}} -->
+<!-- wp:query {"queryId":24,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"layout":{"type":"default"},"className":"np-carousel"} -->
 <div class="wp-block-query np-carousel">
 <!-- wp:post-template {"layout":{"type":"default"}} -->
 <!-- wp:group {"className":"np-carousel-item","layout":{"type":"default"}} -->
@@ -57,7 +57,7 @@
 
 <!-- wp:query-no-results -->
 <!-- wp:paragraph {"className":"np-empty"} -->
-<p class="np-empty">暂无内容，请先发布文章。</p>
+<p class="np-empty">暂无内容，请先发布带特色图片的文章。</p>
 <!-- /wp:paragraph -->
 <!-- /wp:query-no-results -->
 </div>
@@ -65,11 +65,11 @@
 </div>
 <!-- /wp:group -->
 
-<!-- wp:template-part {"slug":"hot-words","tagName":"div","className":"np-hidden"} /-->
+<!-- wp:template-part {"slug":"hot-words","tagName":"div"} /-->
 
 <!-- wp:group {"className":"np-section np-ads","layout":{"type":"default"}} -->
 <div class="wp-block-group np-section np-ads">
-<!-- wp:shortcode -->[np_ad slot="2"]<!-- /wp:shortcode -->
+<!-- wp:shortcode -->[np_ad slot="1"]<!-- /wp:shortcode -->
 </div>
 <!-- /wp:group -->
 
@@ -84,7 +84,7 @@
 <!-- wp:group {"className":"np-sec-head","layout":{"type":"flex","justifyContent":"space-between","verticalAlignment":"center"}} -->
 <div class="wp-block-group np-sec-head">
 <!-- wp:heading {"level":2,"className":"np-sec-title"} -->
-<h2 class="wp-block-heading np-sec-title">惠企政策 <span class="np-sec-en">ENTERPRISE POLICY</span></h2>
+<h2 class="wp-block-heading np-sec-title">新闻资讯 <span class="np-sec-en">NEWS</span></h2>
 <!-- /wp:heading -->
 </div>
 <!-- /wp:group -->
@@ -94,9 +94,9 @@
 <!-- wp:group {"className":"np-local-focus-col","layout":{"type":"default"}} -->
 <div class="wp-block-group np-local-focus-col">
 <!-- wp:heading {"level":3,"className":"np-sub-title"} -->
-<h3 class="wp-block-heading np-sub-title">最新资讯</h3>
+<h3 class="wp-block-heading np-sub-title">焦点资讯</h3>
 <!-- /wp:heading -->
-<!-- wp:query {"queryId":110,"query":{"perPage":8,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[31]}},"layout":{"type":"default"}} -->
+<!-- wp:query {"queryId":110,"query":{"perPage":8,"pages":0,"offset":14,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"layout":{"type":"default"}} -->
 <div class="wp-block-query np-local-focus">
 <!-- wp:post-template {"layout":{"type":"default"}} -->
 <!-- wp:post-title {"isLink":true,"className":"np-list-title"} /-->
@@ -111,7 +111,7 @@
 <!-- wp:heading {"level":3,"className":"np-sub-title"} -->
 <h3 class="wp-block-heading np-sub-title">更多资讯</h3>
 <!-- /wp:heading -->
-<!-- wp:query {"queryId":111,"query":{"perPage":8,"pages":0,"offset":8,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[31]}},"layout":{"type":"default"}} -->
+<!-- wp:query {"queryId":111,"query":{"perPage":8,"pages":0,"offset":22,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"layout":{"type":"default"}} -->
 <div class="wp-block-query np-local-zixun">
 <!-- wp:post-template {"layout":{"type":"default"}} -->
 <!-- wp:post-title {"isLink":true,"className":"np-list-title"} /-->
@@ -126,347 +126,7 @@
 <!-- wp:heading {"level":3,"className":"np-sub-title"} -->
 <h3 class="wp-block-heading np-sub-title">新闻图片</h3>
 <!-- /wp:heading -->
-<!-- wp:query {"queryId":112,"query":{"perPage":1,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[31]}},"layout":{"type":"default"},"className":"np-local-pic"} -->
-<div class="wp-block-query np-local-pic">
-<!-- wp:post-template {"layout":{"type":"default"}} -->
-<!-- wp:group {"className":"np-local-pic-item","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-pic-item">
-<!-- wp:post-featured-image {"isLink":true,"scale":"cover"} /-->
-<!-- wp:post-title {"isLink":true,"className":"np-local-pic-title"} /-->
-</div>
-<!-- /wp:group -->
-<!-- /wp:post-template -->
-</div>
-<!-- /wp:query -->
-</div>
-<!-- /wp:group -->
-</div>
-<!-- /wp:group -->
-
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-section np-local-wrap","layout":{"type":"constrained"}} -->
-<div class="wp-block-group np-section np-local-wrap">
-
-<!-- wp:group {"className":"np-sec-head","layout":{"type":"flex","justifyContent":"space-between","verticalAlignment":"center"}} -->
-<div class="wp-block-group np-sec-head">
-<!-- wp:heading {"level":2,"className":"np-sec-title"} -->
-<h2 class="wp-block-heading np-sec-title">湘潭汽车产业集群 <span class="np-sec-en">AUTO INDUSTRY CLUSTER</span></h2>
-<!-- /wp:heading -->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-local-cols","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-cols">
-<!-- wp:group {"className":"np-local-focus-col","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-focus-col">
-<!-- wp:heading {"level":3,"className":"np-sub-title"} -->
-<h3 class="wp-block-heading np-sub-title">最新资讯</h3>
-<!-- /wp:heading -->
-<!-- wp:query {"queryId":120,"query":{"perPage":8,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[30]}},"layout":{"type":"default"}} -->
-<div class="wp-block-query np-local-focus">
-<!-- wp:post-template {"layout":{"type":"default"}} -->
-<!-- wp:post-title {"isLink":true,"className":"np-list-title"} /-->
-<!-- /wp:post-template -->
-</div>
-<!-- /wp:query -->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-local-zixun-col","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-zixun-col">
-<!-- wp:heading {"level":3,"className":"np-sub-title"} -->
-<h3 class="wp-block-heading np-sub-title">更多资讯</h3>
-<!-- /wp:heading -->
-<!-- wp:query {"queryId":121,"query":{"perPage":8,"pages":0,"offset":8,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[30]}},"layout":{"type":"default"}} -->
-<div class="wp-block-query np-local-zixun">
-<!-- wp:post-template {"layout":{"type":"default"}} -->
-<!-- wp:post-title {"isLink":true,"className":"np-list-title"} /-->
-<!-- /wp:post-template -->
-</div>
-<!-- /wp:query -->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-local-pic-col","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-pic-col">
-<!-- wp:heading {"level":3,"className":"np-sub-title"} -->
-<h3 class="wp-block-heading np-sub-title">新闻图片</h3>
-<!-- /wp:heading -->
-<!-- wp:query {"queryId":122,"query":{"perPage":1,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[30]}},"layout":{"type":"default"},"className":"np-local-pic"} -->
-<div class="wp-block-query np-local-pic">
-<!-- wp:post-template {"layout":{"type":"default"}} -->
-<!-- wp:group {"className":"np-local-pic-item","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-pic-item">
-<!-- wp:post-featured-image {"isLink":true,"scale":"cover"} /-->
-<!-- wp:post-title {"isLink":true,"className":"np-local-pic-title"} /-->
-</div>
-<!-- /wp:group -->
-<!-- /wp:post-template -->
-</div>
-<!-- /wp:query -->
-</div>
-<!-- /wp:group -->
-</div>
-<!-- /wp:group -->
-
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-section np-local-wrap","layout":{"type":"constrained"}} -->
-<div class="wp-block-group np-section np-local-wrap">
-
-<!-- wp:group {"className":"np-sec-head","layout":{"type":"flex","justifyContent":"space-between","verticalAlignment":"center"}} -->
-<div class="wp-block-group np-sec-head">
-<!-- wp:heading {"level":2,"className":"np-sec-title"} -->
-<h2 class="wp-block-heading np-sec-title">专家评论·供稿 <span class="np-sec-en">EXPERT COMMENTS</span></h2>
-<!-- /wp:heading -->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-local-cols","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-cols">
-<!-- wp:group {"className":"np-local-focus-col","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-focus-col">
-<!-- wp:heading {"level":3,"className":"np-sub-title"} -->
-<h3 class="wp-block-heading np-sub-title">最新资讯</h3>
-<!-- /wp:heading -->
-<!-- wp:query {"queryId":130,"query":{"perPage":8,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[33,34]}},"layout":{"type":"default"}} -->
-<div class="wp-block-query np-local-focus">
-<!-- wp:post-template {"layout":{"type":"default"}} -->
-<!-- wp:post-title {"isLink":true,"className":"np-list-title"} /-->
-<!-- /wp:post-template -->
-</div>
-<!-- /wp:query -->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-local-zixun-col","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-zixun-col">
-<!-- wp:heading {"level":3,"className":"np-sub-title"} -->
-<h3 class="wp-block-heading np-sub-title">更多资讯</h3>
-<!-- /wp:heading -->
-<!-- wp:query {"queryId":131,"query":{"perPage":8,"pages":0,"offset":8,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[33,34]}},"layout":{"type":"default"}} -->
-<div class="wp-block-query np-local-zixun">
-<!-- wp:post-template {"layout":{"type":"default"}} -->
-<!-- wp:post-title {"isLink":true,"className":"np-list-title"} /-->
-<!-- /wp:post-template -->
-</div>
-<!-- /wp:query -->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-local-pic-col","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-pic-col">
-<!-- wp:heading {"level":3,"className":"np-sub-title"} -->
-<h3 class="wp-block-heading np-sub-title">新闻图片</h3>
-<!-- /wp:heading -->
-<!-- wp:query {"queryId":132,"query":{"perPage":1,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[33,34]}},"layout":{"type":"default"},"className":"np-local-pic"} -->
-<div class="wp-block-query np-local-pic">
-<!-- wp:post-template {"layout":{"type":"default"}} -->
-<!-- wp:group {"className":"np-local-pic-item","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-pic-item">
-<!-- wp:post-featured-image {"isLink":true,"scale":"cover"} /-->
-<!-- wp:post-title {"isLink":true,"className":"np-local-pic-title"} /-->
-</div>
-<!-- /wp:group -->
-<!-- /wp:post-template -->
-</div>
-<!-- /wp:query -->
-</div>
-<!-- /wp:group -->
-</div>
-<!-- /wp:group -->
-
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-section np-local-wrap","layout":{"type":"constrained"}} -->
-<div class="wp-block-group np-section np-local-wrap">
-
-<!-- wp:group {"className":"np-sec-head","layout":{"type":"flex","justifyContent":"space-between","verticalAlignment":"center"}} -->
-<div class="wp-block-group np-sec-head">
-<!-- wp:heading {"level":2,"className":"np-sec-title"} -->
-<h2 class="wp-block-heading np-sec-title">96871(湘潭) <span class="np-sec-en">96871 XIANGTAN</span></h2>
-<!-- /wp:heading -->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-local-cols","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-cols">
-<!-- wp:group {"className":"np-local-focus-col","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-focus-col">
-<!-- wp:heading {"level":3,"className":"np-sub-title"} -->
-<h3 class="wp-block-heading np-sub-title">最新资讯</h3>
-<!-- /wp:heading -->
-<!-- wp:query {"queryId":140,"query":{"perPage":8,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[32]}},"layout":{"type":"default"}} -->
-<div class="wp-block-query np-local-focus">
-<!-- wp:post-template {"layout":{"type":"default"}} -->
-<!-- wp:post-title {"isLink":true,"className":"np-list-title"} /-->
-<!-- /wp:post-template -->
-</div>
-<!-- /wp:query -->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-local-zixun-col","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-zixun-col">
-<!-- wp:heading {"level":3,"className":"np-sub-title"} -->
-<h3 class="wp-block-heading np-sub-title">更多资讯</h3>
-<!-- /wp:heading -->
-<!-- wp:query {"queryId":141,"query":{"perPage":8,"pages":0,"offset":8,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[32]}},"layout":{"type":"default"}} -->
-<div class="wp-block-query np-local-zixun">
-<!-- wp:post-template {"layout":{"type":"default"}} -->
-<!-- wp:post-title {"isLink":true,"className":"np-list-title"} /-->
-<!-- /wp:post-template -->
-</div>
-<!-- /wp:query -->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-local-pic-col","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-pic-col">
-<!-- wp:heading {"level":3,"className":"np-sub-title"} -->
-<h3 class="wp-block-heading np-sub-title">新闻图片</h3>
-<!-- /wp:heading -->
-<!-- wp:query {"queryId":142,"query":{"perPage":1,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[32]}},"layout":{"type":"default"},"className":"np-local-pic"} -->
-<div class="wp-block-query np-local-pic">
-<!-- wp:post-template {"layout":{"type":"default"}} -->
-<!-- wp:group {"className":"np-local-pic-item","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-pic-item">
-<!-- wp:post-featured-image {"isLink":true,"scale":"cover"} /-->
-<!-- wp:post-title {"isLink":true,"className":"np-local-pic-title"} /-->
-</div>
-<!-- /wp:group -->
-<!-- /wp:post-template -->
-</div>
-<!-- /wp:query -->
-</div>
-<!-- /wp:group -->
-</div>
-<!-- /wp:group -->
-
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-section np-local-wrap","layout":{"type":"constrained"}} -->
-<div class="wp-block-group np-section np-local-wrap">
-
-<!-- wp:group {"className":"np-sec-head","layout":{"type":"flex","justifyContent":"space-between","verticalAlignment":"center"}} -->
-<div class="wp-block-group np-sec-head">
-<!-- wp:heading {"level":2,"className":"np-sec-title"} -->
-<h2 class="wp-block-heading np-sec-title">湘潭企业供需 <span class="np-sec-en">ENTERPRISE SUPPLY &amp; DEMAND</span></h2>
-<!-- /wp:heading -->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-local-cols","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-cols">
-<!-- wp:group {"className":"np-local-focus-col","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-focus-col">
-<!-- wp:heading {"level":3,"className":"np-sub-title"} -->
-<h3 class="wp-block-heading np-sub-title">最新资讯</h3>
-<!-- /wp:heading -->
-<!-- wp:query {"queryId":160,"query":{"perPage":8,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[37]}},"layout":{"type":"default"}} -->
-<div class="wp-block-query np-local-focus">
-<!-- wp:post-template {"layout":{"type":"default"}} -->
-<!-- wp:post-title {"isLink":true,"className":"np-list-title"} /-->
-<!-- /wp:post-template -->
-</div>
-<!-- /wp:query -->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-local-zixun-col","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-zixun-col">
-<!-- wp:heading {"level":3,"className":"np-sub-title"} -->
-<h3 class="wp-block-heading np-sub-title">更多资讯</h3>
-<!-- /wp:heading -->
-<!-- wp:query {"queryId":161,"query":{"perPage":8,"pages":0,"offset":8,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[37]}},"layout":{"type":"default"}} -->
-<div class="wp-block-query np-local-zixun">
-<!-- wp:post-template {"layout":{"type":"default"}} -->
-<!-- wp:post-title {"isLink":true,"className":"np-list-title"} /-->
-<!-- /wp:post-template -->
-</div>
-<!-- /wp:query -->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-local-pic-col","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-pic-col">
-<!-- wp:heading {"level":3,"className":"np-sub-title"} -->
-<h3 class="wp-block-heading np-sub-title">新闻图片</h3>
-<!-- /wp:heading -->
-<!-- wp:query {"queryId":162,"query":{"perPage":1,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[37]}},"layout":{"type":"default"},"className":"np-local-pic"} -->
-<div class="wp-block-query np-local-pic">
-<!-- wp:post-template {"layout":{"type":"default"}} -->
-<!-- wp:group {"className":"np-local-pic-item","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-pic-item">
-<!-- wp:post-featured-image {"isLink":true,"scale":"cover"} /-->
-<!-- wp:post-title {"isLink":true,"className":"np-local-pic-title"} /-->
-</div>
-<!-- /wp:group -->
-<!-- /wp:post-template -->
-</div>
-<!-- /wp:query -->
-</div>
-<!-- /wp:group -->
-</div>
-<!-- /wp:group -->
-
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-section np-local-wrap np-hidden","layout":{"type":"constrained"}} -->
-<div class="wp-block-group np-section np-local-wrap np-hidden">
-
-<!-- wp:group {"className":"np-sec-head","layout":{"type":"flex","justifyContent":"space-between","verticalAlignment":"center"}} -->
-<div class="wp-block-group np-sec-head">
-<!-- wp:heading {"level":2,"className":"np-sec-title"} -->
-<h2 class="wp-block-heading np-sec-title">湘潭工业 <span class="np-sec-en">XIANGTAN INDUSTRY</span></h2>
-<!-- /wp:heading -->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-local-cols","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-cols">
-<!-- wp:group {"className":"np-local-focus-col","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-focus-col">
-<!-- wp:heading {"level":3,"className":"np-sub-title"} -->
-<h3 class="wp-block-heading np-sub-title">最新资讯</h3>
-<!-- /wp:heading -->
-<!-- wp:query {"queryId":150,"query":{"perPage":8,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[35]}},"layout":{"type":"default"}} -->
-<div class="wp-block-query np-local-focus">
-<!-- wp:post-template {"layout":{"type":"default"}} -->
-<!-- wp:post-title {"isLink":true,"className":"np-list-title"} /-->
-<!-- /wp:post-template -->
-</div>
-<!-- /wp:query -->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-local-zixun-col","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-zixun-col">
-<!-- wp:heading {"level":3,"className":"np-sub-title"} -->
-<h3 class="wp-block-heading np-sub-title">更多资讯</h3>
-<!-- /wp:heading -->
-<!-- wp:query {"queryId":151,"query":{"perPage":8,"pages":0,"offset":8,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[35]}},"layout":{"type":"default"}} -->
-<div class="wp-block-query np-local-zixun">
-<!-- wp:post-template {"layout":{"type":"default"}} -->
-<!-- wp:post-title {"isLink":true,"className":"np-list-title"} /-->
-<!-- /wp:post-template -->
-</div>
-<!-- /wp:query -->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"np-local-pic-col","layout":{"type":"default"}} -->
-<div class="wp-block-group np-local-pic-col">
-<!-- wp:heading {"level":3,"className":"np-sub-title"} -->
-<h3 class="wp-block-heading np-sub-title">新闻图片</h3>
-<!-- /wp:heading -->
-<!-- wp:query {"queryId":152,"query":{"perPage":1,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"post_tag":[35]}},"layout":{"type":"default"},"className":"np-local-pic"} -->
+<!-- wp:query {"queryId":112,"query":{"perPage":1,"pages":0,"offset":14,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"layout":{"type":"default"},"className":"np-local-pic"} -->
 <div class="wp-block-query np-local-pic">
 <!-- wp:post-template {"layout":{"type":"default"}} -->
 <!-- wp:group {"className":"np-local-pic-item","layout":{"type":"default"}} -->

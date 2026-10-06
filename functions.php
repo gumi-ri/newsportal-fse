@@ -2,6 +2,9 @@
 /**
  * NewsPortal FSE 主题功能
  *
+ * 通用新闻网站模板：不预置任何品牌、地方信息或站点专属素材，
+ * 站点名称、栏目、热搜词、广告素材均由使用方自行配置。
+ *
  * @package newsportal-fse
  */
 
@@ -32,7 +35,7 @@ function newsportal_enqueue_assets() {
 		'newsportal-extra',
 		get_template_directory_uri() . '/assets/style.css',
 		array(),
-		'2.3.0'
+		'3.0.0'
 	);
 }
 add_action( 'wp_enqueue_scripts', 'newsportal_enqueue_assets', PHP_INT_MAX );
@@ -92,11 +95,14 @@ add_action( 'wp_enqueue_scripts', 'newsportal_enqueue_app' );
 
 /**
  * 文章来源 shortcode：从正文提取「来源：XXX」（存在多个时取最后一个转载来源）
- * 无来源信息时回退显示「莲企通」
+ * 解析不到来源时回退为站点名称（不写死任何品牌）
  */
 function np_article_source_shortcode() {
-	$source = '莲企通';
-	$post   = get_post();
+	$source = get_bloginfo( 'name' );
+	if ( '' === $source ) {
+		$source = __( '本站', 'newsportal-fse' );
+	}
+	$post = get_post();
 	if ( $post ) {
 		$content = wp_strip_all_tags( $post->post_content );
 		if ( preg_match_all( '/来源[：:]\s*([^\s\x{3000}。！？；，<>()（）"\'’”]{2,40})/u', $content, $m ) ) {
@@ -108,15 +114,11 @@ function np_article_source_shortcode() {
 add_shortcode( 'np_article_source', 'np_article_source_shortcode' );
 
 /**
- * 首页「最新」大小字列表排除「图文」标签文章
- * 图文类文章只出现在轮播与板块「新闻图片」位，不应混进首页大小字最新列表。
+ * 记录当前正在渲染的 core/query 区块的 className
  *
- * 精准识别（不再靠 perPage/offset 形状匹配，避免新增同形状查询被误命中）：
- *   1) render_block_data 钩子在每个区块渲染前，记录当前 core/query 区块的 className；
- *   2) 该区块的 WP_Query 触发 pre_get_posts 时，若 className 命中两个「最新」列表
- *      （np-hotnews / np-focuslist）就设 tag__not_in=[27]。
- *   其它任何 Query Loop（即使同样 6/0 或 8/6）className 不同，不会被误命中。
- * 依赖：front-page.html 中这两个 query 区块的 attrs 带 className（已写入）。
+ * render_block_data 钩子在每个区块渲染前执行，把 core/query 区块的 className
+ * 存进全局，供下面基于 className 的查询微调使用（避免依赖 perPage/offset 形状匹配）。
+ * 依赖：模板中目标 query 区块的 attrs 带 className（front-page.html 已写入）。
  */
 function np_track_query_block_class( $block ) {
 	if ( isset( $block['blockName'] ) && 'core/query' === $block['blockName'] ) {
@@ -126,31 +128,18 @@ function np_track_query_block_class( $block ) {
 }
 add_filter( 'render_block_data', 'np_track_query_block_class' );
 
-function np_exclude_tuwen_from_tag_lists( $query ) {
-	if ( is_admin() || $query->is_main_query() ) {
-		return;
-	}
-	$targets = array( 'np-hotnews', 'np-focuslist' );
-	$current = isset( $GLOBALS['np_current_query_class'] ) ? $GLOBALS['np_current_query_class'] : '';
-	if ( ! in_array( $current, $targets, true ) ) {
-		return;
-	}
-	$query->set( 'tag__not_in', array( 27 ) );
-}
-add_action( 'pre_get_posts', 'np_exclude_tuwen_from_tag_lists' );
-
 /**
- * 板块「新闻图片」位只选带特色图片的文章
- * 两个板块图片查询（className=np-local-pic）加 _thumbnail_id EXISTS：
- * 最新文章无图时自动顺延到下一篇有图文章，避免图片位只剩标题条、大片留白。
- * 同样靠 render_block_data 记录的 className 精准命中，不影响其它查询。
+ * 图片位 / 大图轮播只选带特色图片的文章
+ *
+ * className 命中 np-local-pic（板块「新闻图片」）或 np-carousel（右栏大图轮播）时，
+ * 加 _thumbnail_id EXISTS：最新文章无图时自动顺延到下一篇有图文章，避免图片位留白。
  */
 function np_pic_slot_require_thumbnail( $query ) {
 	if ( is_admin() || $query->is_main_query() ) {
 		return;
 	}
 	$current = isset( $GLOBALS['np_current_query_class'] ) ? $GLOBALS['np_current_query_class'] : '';
-	if ( 'np-local-pic' !== $current ) {
+	if ( ! in_array( $current, array( 'np-local-pic', 'np-carousel' ), true ) ) {
 		return;
 	}
 	$query->set(
@@ -178,15 +167,13 @@ add_filter( 'comment_form_default_fields', 'np_remove_comment_email_field' );
  * 广告位短代码 [np_ad slot="1"]
  *
  * 用法：
- *   [np_ad slot="1"]                     —— 显示该格固定绑定的图片，跳默认目标
- *   [np_ad slot="1" id="3209"]           —— 覆盖为指定媒体库附件 ID
- *   [np_ad slot="1" img="https://..."]   —— 覆盖为指定图片 URL
- *   [np_ad slot="1" link="https://..."]  —— 覆盖跳转链接
+ *   [np_ad slot="1"]                     —— 显示占位框（未绑定素材时）
+ *   [np_ad slot="1" id="123"]            —— 绑定媒体库附件 ID
+ *   [np_ad slot="1" img="https://..."]   —— 绑定指定图片 URL
+ *   [np_ad slot="1" link="https://..."]  —— 绑定跳转链接
  *
- * 每格固定绑定一张图（不再随机）：slot→[附件ID, 跳转] 见下方 $ad_slots 表。
- * 当前绑定：slot1=96871直播中心亮色海报v2（3215，跳抖音）、slot2=湘潭工业信息大脑亮色海报v2（3216，跳关于页）。
- * 换图：在媒体库替换该附件文件（ID 不变）即生效；或删旧图后把新附件 ID 填进表里，
- * 或直接在编辑器给短代码加 id/img 属性。目标格无有效图时渲染可点击占位框。
+ * 通用版：主题不预置任何图片、附件 ID 或外链，全部由使用方按需传入；
+ * 未绑定素材时渲染可点击占位框，方便先搭好版式再补素材。
  */
 function np_ad_shortcode( $atts ) {
 	$atts = shortcode_atts(
@@ -205,33 +192,44 @@ function np_ad_shortcode( $atts ) {
 		$slot = '1';
 	}
 
-	// slot => [ 固定附件 ID, 默认跳转 ]（2026-09-29：广告位减至 2 格；同日换亮色版-v2 海报 3215/3216，旧 3211/3212 留媒体库不引用）
-	$ad_slots = array(
-		'1' => array( 3215, 'https://www.douyin.com/user/MS4wLjABAAAAO7VLQtiptwu-L5mcSM6EcZ6A8-l5HjZgxUhAzHwSxqI' ),
-		'2' => array( 3216, 'https://www.xt96871.com/2024/06/01/about/' ),
-	);
-	$conf = isset( $ad_slots[ $slot ] ) ? $ad_slots[ $slot ] : array( 0, 'https://www.xt96871.com/' );
-
-	$link = '' !== $atts['link'] ? $atts['link'] : $conf[1];
-
 	$img_url = '';
 	if ( '' !== $atts['img'] ) {
 		$img_url = $atts['img'];
 	} else {
-		$id = '' !== $atts['id'] ? (int) $atts['id'] : (int) $conf[0];
+		$id = '' !== $atts['id'] ? (int) $atts['id'] : 0;
 		if ( $id > 0 && 'attachment' === get_post_type( $id ) ) {
 			$full    = wp_get_attachment_image_url( $id, 'large' );
 			$img_url = $full ? $full : wp_get_attachment_url( $id );
 		}
 	}
 
-	$link_esc = esc_url( $link );
+	$link     = esc_url( $atts['link'] );
+	$link_att = '' !== $link ? ' href="' . $link . '" target="_blank" rel="noopener"' : '';
 
 	if ( '' !== $img_url ) {
-		return '<div class="wp-block-group np-ad-slot"><a class="np-ad-link" href="' . $link_esc . '" target="_blank" rel="noopener"><img class="np-ad-img" src="' . esc_url( $img_url ) . '" alt="广告位' . esc_attr( $slot ) . '" loading="lazy"></a></div>';
+		return '<div class="wp-block-group np-ad-slot"><a class="np-ad-link"' . $link_att . '><img class="np-ad-img" src="' . esc_url( $img_url ) . '" alt="广告位' . esc_attr( $slot ) . '" loading="lazy"></a></div>';
 	}
 
-	return '<div class="wp-block-group np-ad-slot"><a class="np-ad-link np-ad-placeholder" href="' . $link_esc . '" target="_blank" rel="noopener">广告位 ' . esc_html( $slot ) . '（待上传素材）</a></div>';
+	return '<div class="wp-block-group np-ad-slot"><a class="np-ad-link np-ad-placeholder"' . $link_att . '>广告位 ' . esc_html( $slot ) . '（待上传素材）</a></div>';
 }
 add_shortcode( 'np_ad', 'np_ad_shortcode' );
 
+/**
+ * 页脚版权 shortcode [np_copyright]
+ *
+ * 动态输出「版权所有 © 年份 站点名称 · 保留所有权利」，
+ * 年份取当前时间，站点名称取后台「设置 → 常规」，不含任何写死的品牌信息。
+ */
+function np_copyright_shortcode() {
+	$year = date_i18n( 'Y' );
+	$name = get_bloginfo( 'name' );
+	$name = $name ? '<a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html( $name ) . '</a>' : '';
+
+	return '<p class="np-copyright">' . sprintf(
+		/* translators: 1: 当前年份，2: 站点名称 */
+		esc_html__( '版权所有 © %1$s %2$s · 保留所有权利', 'newsportal-fse' ),
+		esc_html( $year ),
+		$name
+	) . '</p>';
+}
+add_shortcode( 'np_copyright', 'np_copyright_shortcode' );

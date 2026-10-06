@@ -1,5 +1,5 @@
 /**
- * NewsPortal FSE 附加样式 —— 百度新闻(news.baidu.com)布局像素级还原
+ * NewsPortal FSE 附加样式 —— 门户新闻布局
  * 前台与区块编辑器共用
  */
 
@@ -50,11 +50,23 @@ a {
 	text-overflow: ellipsis;
 }
 
+/* 顶栏右侧频道导航（wp:categories，自动读取站点分类） */
 .np-topbar-links {
-	display: inline-block;
 	margin: 0;
+	padding: 0;
 	font-size: 13px;
 	font-weight: 700;
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0 22px;
+}
+
+.np-topbar-links li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
 .np-topbar-links a {
@@ -108,7 +120,7 @@ a {
 	max-width: 984px;
 	margin: 0 auto;
 	display: grid !important;
-	grid-template-columns: auto auto 1fr auto;
+	grid-template-columns: auto minmax(0, 1fr);
 	align-items: center;
 	column-gap: 14px;
 }
@@ -142,48 +154,8 @@ a {
 	width: auto;
 }
 
-/* logo 右侧品牌副标题「|湘潭工业信息大脑」+ 下方「96871直播中心（湘潭）出品」 */
-.np-brand {
-	grid-column: 2;
-	margin: 0;
-	display: flex;
-	align-items: center;
-	white-space: nowrap;
-	line-height: 1;
-}
-
-.np-brand-divider {
-	color: #ccd4df;
-	font-weight: 300;
-	font-size: 26px;
-	margin-right: 10px;
-}
-
-.np-brand-text {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	line-height: 1.2;
-}
-
-.np-brand-name {
-	font-family: "YouYuan", "幼圆", "Yuanti SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-	font-weight: 700;
-	font-size: 24px;
-	letter-spacing: 1px;
-	color: #555;
-}
-
-.np-brand-sub {
-	font-family: "YouYuan", "幼圆", "Yuanti SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-	font-weight: 400;
-	font-size: 13px;
-	letter-spacing: 0.5px;
-	color: #8a8a8a;
-}
-
 .np-searchbar .wp-block-search {
-	grid-column: 3;
+	grid-column: 2;
 	justify-self: end;
 	width: 100%;
 	max-width: 600px;
@@ -271,47 +243,6 @@ a {
 
 .np-searchbar .wp-block-search__button:focus {
 	outline: none;
-}
-
-/* 看视频按钮（橙色渐变胶囊，链到抖音主页） */
-.np-video {
-	grid-column: 4;
-	margin: 0;
-	white-space: nowrap;
-}
-
-.np-video a {
-	display: inline-flex;
-	align-items: center;
-	gap: 7px;
-	height: 40px;
-	padding: 0 22px;
-	border-radius: 20px;
-	background: linear-gradient(135deg, #ff9a2e 0%, #ff6a00 60%, #ff5000 100%);
-	color: #fff;
-	font-size: 14px;
-	font-weight: 600;
-	letter-spacing: 1px;
-	text-decoration: none;
-	box-shadow: 0 4px 14px rgba(255, 90, 0, 0.35);
-	transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-}
-
-.np-video a::before {
-	content: "▶";
-	font-size: 11px;
-	line-height: 1;
-}
-
-.np-video a:hover {
-	color: #fff;
-	filter: brightness(1.06);
-	transform: translateY(-1px);
-	box-shadow: 0 6px 18px rgba(255, 90, 0, 0.45);
-}
-
-.np-video a:active {
-	transform: translateY(0);
 }
 
 /* ================= 门户主体：左390 / 右560（Grid 布局，编辑器友好） ================= */
@@ -757,8 +688,8 @@ a {
 	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* ================= 本地新闻三列（Grid 布局，编辑器友好） ================= */
-/* DOM 顺序：本地焦点 385 / 新闻资讯 290 / 新闻图片 240（与原 float 视觉一致） */
+/* ================= 新闻板块三列（Grid 布局，编辑器友好） ================= */
+/* DOM 顺序：焦点资讯 385 / 更多资讯 290 / 新闻图片 240 */
 /* 列宽用 minmax(0, …)：画布/视口不足时可收缩，绝不横向溢出 */
 .np-local-cols {
 	display: grid;
@@ -773,7 +704,7 @@ a {
 	min-width: 0;
 }
 
-/* 本地焦点序号 */
+/* 焦点列表序号 */
 .np-local-focus {
 	counter-reset: np-local;
 }
@@ -822,7 +753,7 @@ a {
 	text-decoration: underline;
 }
 
-/* 本地新闻图片（大图 + 底部遮罩标题） */
+/* 新闻图片位（大图 + 底部遮罩标题） */
 .np-local-pic .wp-block-post {
 	list-style: none;
 }
@@ -867,7 +798,7 @@ a {
 	color: #fff;
 }
 
-/* 本地新闻资讯 */
+/* 更多资讯列表 */
 .np-local-zixun .wp-block-post {
 	list-style: none;
 	margin: 0 0 12px;
@@ -1145,8 +1076,7 @@ a {
 	font-weight: 500;
 }
 
-.np-article-author .np-article-date,
-.np-article-author .np-article-cats {
+.np-article-author .np-article-date {
 	font-size: 13px;
 	color: #999;
 	margin: 0;
@@ -1467,19 +1397,23 @@ a {
 	}
 
 	.np-searchbar-inner {
-		grid-template-columns: minmax(0, 1fr) auto;
+		grid-template-columns: minmax(0, 1fr);
 		grid-template-areas:
-			"logo video"
-			"brand video"
-			"search search";
+			"logo"
+			"search";
 		gap: 12px;
 		padding: 0 12px;
 	}
 
-	/* logo 左、看视频按钮右同行排列，超出可收缩，不被 overflow:hidden 裁剪 */
+	/* 站点标题通栏一行；若站点配置了 Logo 亦同理，超出可收缩、不被 overflow:hidden 裁剪 */
+	.np-header .wp-block-site-title,
 	.np-header .wp-block-site-logo {
 		grid-area: logo;
 		max-width: 100%;
+	}
+
+	.np-header .wp-block-site-title a {
+		font-size: 24px;
 	}
 
 	.np-header .wp-block-site-logo img {
@@ -1487,41 +1421,6 @@ a {
 		max-width: 100%;
 		width: auto;
 		height: auto;
-	}
-
-	/* 品牌副标题：换到 logo 下方一行，字号缩小 */
-	.np-brand {
-		grid-area: brand;
-	}
-
-	.np-brand-divider {
-		font-size: 18px;
-		margin-right: 6px;
-	}
-
-	.np-brand-name {
-		font-size: 16px;
-		letter-spacing: 0.5px;
-	}
-
-	.np-brand-sub {
-		font-size: 11px;
-		letter-spacing: 0.3px;
-	}
-
-	.np-video {
-		grid-area: video;
-	}
-
-	.np-video a {
-		height: 36px;
-		padding: 0 16px;
-		font-size: 13px;
-		border-radius: 18px;
-	}
-
-	.np-video a::before {
-		font-size: 10px;
 	}
 
 	.np-searchbar .wp-block-search {
@@ -1555,10 +1454,9 @@ a {
 
 	/* 分类链接：横向滚动条式导航 */
 	.np-topbar-links {
-		display: flex;
 		flex-wrap: nowrap;
-		align-items: center;
 		justify-content: flex-start;
+		gap: 0;
 		max-width: 100%;
 		overflow-x: auto;
 		-webkit-overflow-scrolling: touch;
@@ -1567,6 +1465,10 @@ a {
 
 	.np-topbar-links::-webkit-scrollbar {
 		display: none;
+	}
+
+	.np-topbar-links li {
+		flex: 0 0 auto;
 	}
 
 	.np-topbar-links a {
@@ -1580,7 +1482,7 @@ a {
 		margin-left: 0;
 	}
 
-	.np-topbar-links a:not(:first-child)::before {
+	.np-topbar-links li:not(:first-child) a::before {
 		content: "";
 		display: inline-block;
 		width: 1px;
@@ -1638,4 +1540,21 @@ a {
 	color: #999;
 	font-size: 14px;
 	letter-spacing: 2px;
+}
+
+/* ================= 页脚版权（np_copyright 短代码输出） ================= */
+.np-copyright {
+	margin: 0;
+	text-align: center;
+	font-size: 12px;
+	color: #999;
+	line-height: 1.6;
+}
+
+.np-copyright a {
+	color: #999;
+}
+
+.np-copyright a:hover {
+	color: #2e61bf;
 }
