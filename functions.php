@@ -32,7 +32,7 @@ function newsportal_enqueue_assets() {
 		'newsportal-extra',
 		get_template_directory_uri() . '/assets/style.css',
 		array(),
-		'2.3.0'
+		'2.4.1'
 	);
 }
 add_action( 'wp_enqueue_scripts', 'newsportal_enqueue_assets', PHP_INT_MAX );

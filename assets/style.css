@@ -3,6 +3,24 @@
  * 前台与区块编辑器共用
  */
 
+/* ================= 设计令牌（2026-10-06：参照青岛大学官网统一色板） ================= */
+/* 之前各处颜色各自定义（Logo 渐变蓝 / 红点 #da4453 / 橙按钮 / 藏青 #254282），
+   新增板块就多一分混杂。这里收敛为一套可复用变量，后续板块直接引用。 */
+:root {
+	--np-brand: #006098;      /* 导航蓝 */
+	--np-brand-d: #004975;    /* 工具条深蓝 */
+	--np-link: #336699;       /* 正文链接蓝 */
+	--np-link-h: #1a37a0;     /* 链接悬停深蓝 */
+	--np-accent: #c91111;     /* 强调红（标签/角标） */
+	--np-accent-d: #cc0610;   /* 角标红 */
+	--np-gold: #ffbb29;       /* 点缀金 */
+	--np-zebra: #f3f5f8;      /* 斑马纹行底 */
+	--np-ink: #222;           /* 正文 */
+	--np-ink2: #5b6771;       /* 次要文字 */
+	--np-ink3: #848484;       /* 弱化文字 */
+	--np-line: #e6e9ee;       /* 分隔线 */
+}
+
 /* ================= 全局 ================= */
 body {
 	background: #fff;
@@ -23,11 +41,12 @@ a {
 	box-sizing: border-box;
 }
 
-/* ================= 顶部产品栏（全宽，右对齐） ================= */
+/* ================= 顶部产品栏（深蓝品牌顶带，参照青大官网） ================= */
 .np-topbar {
-	height: 32px;
-	line-height: 32px;
-	border-bottom: 1px solid #ebebeb;
+	height: 38px;
+	line-height: 38px;
+	background: var(--np-brand-d);
+	border-bottom: none;
 	width: 100%;
 }
 
@@ -44,7 +63,7 @@ a {
 .np-topbar-slogan {
 	margin: 0;
 	font-size: 12px;
-	color: #999;
+	color: #b7cfe0;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -54,20 +73,23 @@ a {
 	display: inline-block;
 	margin: 0;
 	font-size: 13px;
-	font-weight: 700;
+	font-weight: 400;
 }
 
 .np-topbar-links a {
-	color: #333;
-	text-decoration: underline;
+	color: #e8f1f8;
+	text-decoration: none;
+	transition: color 0.15s ease;
 }
 
 .np-topbar-links a + a {
-	margin-left: 22px;
+	margin-left: 18px;
+	padding-left: 18px;
+	border-left: 1px solid rgba(255, 255, 255, 0.22);
 }
 
 .np-topbar-links a:hover {
-	color: #2e61bf;
+	color: var(--np-gold);
 }
 
 .np-topbar-links .np-cur {
@@ -335,26 +357,90 @@ a {
 }
 
 .np-sec-head {
-	border-top: 2px solid #999;
-	border-bottom: 1px solid #dee2e6;
-	padding: 10px 0;
-	margin-bottom: 14px;
+	position: relative;
+	border-top: none;
+	border-bottom: 2px solid var(--np-brand);
+	padding: 0 0 11px;
+	margin-bottom: 16px;
+	gap: 12px;
+}
+
+/* 主题色短划线：压在长蓝线左侧，形成「蓝底 + 红头」的栏目语言 */
+.np-sec-head::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: -2px;
+	width: 92px;
+	height: 2px;
+	background: var(--np-accent);
 }
 
 .np-sec-title {
 	font-size: 20px;
 	font-weight: 700;
-	color: #254282;
+	color: var(--np-brand);
 	margin: 0;
-	line-height: 26px;
+	line-height: 30px;
+	display: flex;
+	align-items: center;
+	gap: 9px;
+}
+
+/* 区块图标：方框 + 单字（无需引入图标字体/图片） */
+.np-sec-ic {
+	flex: 0 0 auto;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	border: 1.5px solid var(--np-brand);
+	border-radius: 7px;
+	color: var(--np-brand);
+	font-size: 15px;
+	font-weight: 700;
+	line-height: 1;
+	background: #f2f8fc;
 }
 
 .np-sec-en {
-	font-size: 14px;
+	font-size: 13px;
 	font-weight: 400;
-	color: #999;
+	color: #9aa4ae;
 	text-transform: uppercase;
-	margin-left: 8px;
+	letter-spacing: 0.08em;
+	margin-left: 2px;
+}
+
+/* 右侧「查看更多 ›」 */
+.np-sec-more {
+	margin: 0;
+	font-size: 13px;
+	white-space: nowrap;
+	line-height: 30px;
+}
+
+.np-sec-more a {
+	color: var(--np-brand);
+	display: inline-flex;
+	align-items: center;
+	gap: 2px;
+}
+
+.np-sec-more a::after {
+	content: "›";
+	font-size: 16px;
+	line-height: 1;
+	transition: transform 0.18s ease;
+}
+
+.np-sec-more a:hover {
+	color: var(--np-accent);
+}
+
+.np-sec-more a:hover::after {
+	transform: translateX(3px);
 }
 
 .np-switch-city {
@@ -395,9 +481,23 @@ a {
 .np-sub-title {
 	font-size: 16px;
 	font-weight: 700;
-	color: #222;
+	color: var(--np-ink);
 	margin: 0 0 12px;
-	line-height: 24px;
+	line-height: 20px;
+	padding-left: 9px;
+	border-left: 3px solid var(--np-brand);
+	position: relative;
+}
+
+/* 三列子栏目标题：蓝底小方块 + 标题（与区块头同一套栏目语言） */
+.np-sub-title::after {
+	content: "";
+	position: absolute;
+	left: -3px;
+	top: 0;
+	width: 3px;
+	height: 8px;
+	background: var(--np-accent);
 }
 
 .np-empty {
@@ -407,33 +507,50 @@ a {
 }
 
 /* ================= 热点要闻（左栏） ================= */
+/* 2026-10-06：Tab 改为「平行四边形斜切标签」（参照青大官网切换控件），
+   文字用内层 span 反向斜切回正。 */
 .np-tab {
-	border-bottom: 1px solid #e5e5e5;
+	border-bottom: none;
+	padding: 0;
+	margin: 0 0 2px;
+	display: flex;
+	gap: 8px;
 }
 
 .np-tab-item {
 	margin: 0;
-	height: 36px;
-	line-height: 36px;
-	padding: 0 20px;
-	font-size: 18px;
+	height: 32px;
+	line-height: 32px;
+	padding: 0 22px;
+	font-size: 15px;
 	font-weight: 700;
-	color: #666;
-	border-bottom: 2px solid transparent;
+	letter-spacing: 0.06em;
+	color: #fff;
+	background: #b3bac1;
+	transform: skewX(-13deg);
+	border-radius: 2px;
+	border-bottom: none;
+}
+
+.np-tab-item > span {
+	display: inline-block;
+	transform: skewX(13deg);
 }
 
 .np-tab-item a {
-	color: #666;
+	color: #fff;
 }
 
 .np-tab-item a:hover {
 	text-decoration: none;
-	color: #2f63ba;
+	color: #fff;
 }
 
 .np-tab-item.np-tab-active {
-	color: #2f63ba;
-	border-bottom: 2px solid #2f63ba;
+	color: #fff;
+	background: var(--np-accent);
+	border-bottom: none;
+	box-shadow: 0 3px 8px rgba(201, 17, 17, 0.22);
 }
 
 .np-refresh-tip {
@@ -551,8 +668,29 @@ a {
 }
 
 .np-focuslist .wp-block-post-title a:hover {
-	color: #369;
+	color: var(--np-link);
 	text-decoration: underline;
+}
+
+/* 行分隔线（绝对定位，不参与布局，避免破坏上面已调好的行距节奏） */
+.np-hotnews .wp-block-post,
+.np-focuslist .wp-block-post {
+	position: relative;
+}
+
+.np-hotnews .wp-block-post:not(:last-of-type)::after,
+.np-focuslist .wp-block-post:not(:last-of-type)::after {
+	content: "";
+	position: absolute;
+	left: 14px;
+	right: 0;
+	bottom: 0;
+	border-top: 1px dashed #eef1f5;
+}
+
+.np-hotnews .wp-block-post:hover .wp-block-post-title a,
+.np-focuslist .wp-block-post:hover .wp-block-post-title a {
+	color: var(--np-link);
 }
 
 /* ================= 推荐信息流（左栏） ================= */
@@ -773,52 +911,61 @@ a {
 	min-width: 0;
 }
 
-/* 本地焦点序号 */
-.np-local-focus {
-	counter-reset: np-local;
-}
-
-.np-local-focus .wp-block-post {
+/* 板块内的「最新资讯 / 更多资讯」列表
+   —— 2026-10-06 参照青大官网通知公告区改版：
+      左侧日期条 + 奇偶行斑马纹 + 悬停浅蓝底，长列表可高速扫读。
+      （原为 1-8 序号徽章；日期比序号更能表达资讯的时效性） */
+.np-local-focus .wp-block-post,
+.np-local-zixun .wp-block-post {
 	list-style: none;
-	counter-increment: np-local;
-	margin: 0 0 12px;
-	position: relative;
-	padding-left: 26px;
+	margin: 0;
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	padding: 9px 10px;
+	border-bottom: 1px solid #f0f2f5;
+	transition: background 0.15s ease;
 }
 
-.np-local-focus .np-list-title {
+.np-local-focus .wp-block-post:nth-child(odd),
+.np-local-zixun .wp-block-post:nth-child(odd) {
+	background: var(--np-zebra);
+}
+
+.np-local-focus .wp-block-post:hover,
+.np-local-zixun .wp-block-post:hover {
+	background: #e8f2f9;
+}
+
+/* 日期条 */
+.np-list-date {
+	flex: 0 0 auto;
+	font-size: 12px;
+	color: var(--np-ink2);
+	background: #fff;
+	border: 1px solid var(--np-line);
+	border-radius: 4px;
+	padding: 1px 7px;
+	line-height: 18px;
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0.02em;
+}
+
+.np-local-focus .np-list-title,
+.np-local-zixun .np-list-title {
+	flex: 1;
 	margin: 0;
 	font-size: 14px;
 	font-weight: 400;
 	line-height: 20px;
 }
 
-.np-local-focus .wp-block-post-title::before {
-	content: counter(np-local);
-	position: absolute;
-	left: 0;
-	top: 1px;
-	width: 18px;
-	height: 18px;
-	line-height: 18px;
-	text-align: center;
-	font-size: 12px;
-	color: #666;
-	background: #eef0f3;
-	border-radius: 3px;
-}
-
-.np-local-focus .wp-block-post:nth-child(-n+3) .wp-block-post-title::before {
-	color: #fff;
-	background: #da4453;
-}
-
 .np-list-title a {
-	color: #222;
+	color: var(--np-ink);
 }
 
 .np-list-title a:hover {
-	color: #2e61bf;
+	color: var(--np-link);
 	text-decoration: underline;
 }
 
@@ -854,8 +1001,8 @@ a {
 	bottom: 0;
 	width: 100%;
 	margin: 0;
-	padding: 6px 8px;
-	background: rgba(0, 0, 0, 0.7);
+	padding: 22px 9px 8px;
+	background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
 }
 
 .np-local-pic-title a {
@@ -867,17 +1014,39 @@ a {
 	color: #fff;
 }
 
-/* 本地新闻资讯 */
-.np-local-zixun .wp-block-post {
-	list-style: none;
-	margin: 0 0 12px;
+/* 本地新闻资讯 —— 行样式与「最新资讯」共用上方统一规则（日期条 + 斑马纹），此处不再单独覆盖 */
+
+/* 图片日期角标：蓝底「日」+ 红底「月」（参照青大官网图片位）
+   通用选择器——板块「新闻图片」位与右栏大图轮播共用同一套角标。 */
+.np-pic-date {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	width: 46px;
+	border-radius: 6px;
+	overflow: hidden;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+	z-index: 3;
+	text-align: center;
 }
 
-.np-local-zixun .np-list-title {
+.np-pic-date .wp-block-post-date {
 	margin: 0;
-	font-size: 14px;
-	font-weight: 400;
-	line-height: 22px;
+}
+
+.np-pic-day {
+	background: var(--np-link-h);
+	color: #fff;
+	font-size: 19px;
+	font-weight: 700;
+	line-height: 1.35;
+}
+
+.np-pic-month {
+	background: var(--np-accent-d);
+	color: #fff;
+	font-size: 11px;
+	line-height: 1.8;
 }
 
 /* ================= 相关文章 ================= */
@@ -1638,4 +1807,121 @@ a {
 	color: #999;
 	font-size: 14px;
 	letter-spacing: 2px;
+}
+
+/* ================= 页脚（深蓝信息型，2026-10-06 参照青大官网改版） ================= */
+/* 原为「一行版权」；改为 深蓝底 + 联系方式 + 快速入口 + 品牌 的三栏信息型页脚。
+   注意：footer 模板部件在 .np-main 之外，故用 max-width:none 让底色通栏，
+   再靠 .np-footer-inner 收敛内容宽度。 */
+.np-footer {
+	background: var(--np-brand-d);
+	color: #cfe0ec;
+	margin: 0 !important;
+	padding: 0 !important;
+	max-width: none !important;
+	width: 100%;
+	border-top: 3px solid var(--np-brand);
+}
+
+.np-footer .wp-block-group {
+	margin: 0;
+}
+
+.np-footer-inner {
+	max-width: 984px;
+	margin: 0 auto !important;
+	display: grid !important;
+	grid-template-columns: 1.4fr 1fr auto;
+	gap: 30px;
+	padding: 26px 0 22px;
+	align-items: start;
+}
+
+.np-foot-t {
+	margin: 0 0 11px;
+	font-size: 13px;
+	font-weight: 700;
+	color: #fff;
+	letter-spacing: 0.05em;
+}
+
+.np-foot-line {
+	margin: 0 0 6px;
+	font-size: 12.5px;
+	color: #bcd4e4;
+	line-height: 1.7;
+}
+
+.np-foot-ic {
+	display: inline-block;
+	width: 16px;
+	color: #7fc0e6;
+}
+
+.np-foot-links {
+	margin: 0;
+}
+
+.np-foot-links a {
+	display: inline-block;
+	margin: 0 16px 7px 0;
+	color: #bcd4e4;
+	font-size: 12.5px;
+	transition: color 0.15s ease;
+}
+
+.np-foot-links a:hover {
+	color: var(--np-gold);
+}
+
+.np-foot-brand {
+	text-align: right;
+}
+
+.np-foot-logo {
+	margin: 0;
+	font-size: 24px;
+	font-weight: 800;
+	color: #fff;
+	letter-spacing: 0.08em;
+	line-height: 1.1;
+}
+
+.np-foot-logo-en {
+	margin: 3px 0 9px;
+	font-size: 9px;
+	letter-spacing: 0.34em;
+	color: #8fc3e0;
+}
+
+.np-foot-slogan {
+	margin: 0;
+	font-size: 12px;
+	color: #9dc4dd;
+}
+
+.np-footer-bar {
+	background: rgba(0, 0, 0, 0.16);
+	border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.np-foot-copy {
+	max-width: 984px;
+	margin: 0 auto !important;
+	padding: 11px 0;
+	font-size: 12px;
+	color: #9dc4dd;
+	text-align: center;
+}
+
+@media (max-width: 782px) {
+	.np-footer-inner {
+		grid-template-columns: 1fr;
+		gap: 18px;
+		padding: 22px 12px;
+	}
+
+	.np-foot-brand {
+		text-align: left;
+	}
 }
