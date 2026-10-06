@@ -957,9 +957,10 @@ a {
 	display: grid;
 	grid-template-columns: minmax(0, 1.32fr) minmax(0, 1fr);
 	column-gap: var(--np-gap);
-	/* stretch（而非 start）：两列等高，短的一列靠列表行吸收余量，
-	   避免矮列下方出现大片空白（实测最大列高差曾达 266px） */
-	align-items: stretch;
+	/* start（而非 stretch）：列高由内容决定，不强撑等高。
+	   两列配平改由 JS 按需露出右列文章数（见 assets/app.js 的 npBalanceCols），
+	   短列下方不再被拉伸出空白。 */
+	align-items: start;
 }
 
 /* 列 → 列表两级 flex 贯通，让「列表行」成为可伸缩的余量吸收器 */
@@ -1105,52 +1106,14 @@ a {
 	object-fit: cover;
 }
 
-/* 首条「无特色图」→ 补一块与有图卡片等高的「品牌占位板」：
-   否则无图板块的首条会比有图板块矮一大截（实测 77 vs 343），两列高度差被进一步放大。
-   样式上只用「极淡的品牌蓝渐变 + 居中虚线图片框」，明确读作"此处待配图"；
-   不要用斜纹 —— 斜纹看起来像"缺失图"的警示纹，反而更刺眼。
-   注意：两列都要写全属性（曾因右列只写 height 导致占位板不渲染）。 */
-.np-local-focus .wp-block-post:first-of-type:not(:has(.np-list-thumb)),
-.np-local-zixun .wp-block-post:first-of-type:not(:has(.np-list-thumb)) {
-	position: relative;
-}
+/* 首条图片固定高度（保留左主右次的主次差），**不再补占位板**：
+   两列高度改由「自适应露出条数」配平（见 assets/app.js 的 npBalanceCols）。
 
-.np-local-focus .wp-block-post:first-of-type:not(:has(.np-list-thumb))::before,
-.np-local-zixun .wp-block-post:first-of-type:not(:has(.np-list-thumb))::before {
-	content: "";
-	display: block;
-	height: 200px;
-	margin-bottom: 10px;
-	border-radius: 8px;
-	border: 1px solid var(--np-blue-100);
-	background: linear-gradient(135deg, #eef4ff 0%, #f9fcff 100%);
-}
-
-.np-local-zixun .wp-block-post:first-of-type:not(:has(.np-list-thumb))::before {
-	height: 160px;
-}
-
-/* 占位板中央的虚线图片框 */
-.np-local-focus .wp-block-post:first-of-type:not(:has(.np-list-thumb))::after,
-.np-local-zixun .wp-block-post:first-of-type:not(:has(.np-list-thumb))::after {
-	content: "";
-	position: absolute;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 68px;
-	height: 52px;
-	border-radius: 8px;
-	border: 2px dashed rgba(15, 79, 224, 0.2);
-	pointer-events: none;
-}
-
-/* 卡片内边距 11px + 板高一半 = 板的垂直中心 */
-.np-local-focus .wp-block-post:first-of-type:not(:has(.np-list-thumb))::after {
-	top: 111px;
-}
-
-.np-local-zixun .wp-block-post:first-of-type:not(:has(.np-list-thumb))::after {
-	top: 91px;
+   右列候选池：模板里「更多资讯」的 query perPage 提到 16（文章 9-24），
+   本规则默认只露出前 8 条（避免 JS 执行前闪出 16 条），其余由 JS 按需展开/收起
+   —— 与左列（文章 1-8）始终连续、不重叠。 */
+.np-local-zixun .wp-block-post:nth-child(n + 9) {
+	display: none;
 }
 
 .np-local-focus .wp-block-post:first-of-type .np-list-date,

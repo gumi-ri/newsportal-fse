@@ -32,7 +32,7 @@ function newsportal_enqueue_assets() {
 		'newsportal-extra',
 		get_template_directory_uri() . '/assets/style.css',
 		array(),
-		'2.5.7'
+		'2.5.8'
 	);
 }
 add_action( 'wp_enqueue_scripts', 'newsportal_enqueue_assets', PHP_INT_MAX );
@@ -67,26 +67,26 @@ add_action( 'rest_api_init', 'newsportal_register_like_route' );
  * 文章页交互脚本（点赞 / 分享），传入 REST 地址与初始点赞数
  */
 function newsportal_enqueue_app() {
-	if ( ! is_singular( 'post' ) ) {
-		return;
-	}
-	$post_id = get_the_ID();
 	wp_enqueue_script(
 		'newsportal-app',
 		get_template_directory_uri() . '/assets/app.js',
 		array(),
-		'1.0.2',
+		'1.0.3',
 		true
 	);
-	wp_localize_script(
-		'newsportal-app',
-		'npData',
-		array(
-			'restUrl' => esc_url_raw( rest_url( 'newsportal/v1/' ) ),
-			'postId'  => (int) $post_id,
-			'likes'   => (int) get_post_meta( $post_id, '_np_likes', true ),
-		)
-	);
+	// npData 仅文章页需要（点赞/分享用）；首页加载 app.js 是为了两列高度配平
+	if ( is_singular( 'post' ) ) {
+		$post_id = get_the_ID();
+		wp_localize_script(
+			'newsportal-app',
+			'npData',
+			array(
+				'restUrl' => esc_url_raw( rest_url( 'newsportal/v1/' ) ),
+				'postId'  => (int) $post_id,
+				'likes'   => (int) get_post_meta( $post_id, '_np_likes', true ),
+			)
+		);
+	}
 }
 add_action( 'wp_enqueue_scripts', 'newsportal_enqueue_app' );
 
