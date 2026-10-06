@@ -609,34 +609,24 @@ a {
 	padding-left: 40px;
 }
 
-/* 红点头条列表 */
-.np-hotnews {
-	padding-bottom: 2px;
-	margin-top: 18px;
+/* TODAY 热点要闻：原「橙点头条(6) + 蓝点焦点(8)」两个隔离子列表已合并为
+   单一列表（np-today-list，perPage 22）。统一处理 —— 每行橙点 + 16px 正文 +
+   统一行距（墨迹空隙恒 20px），去除两套字号/点色造成的「隔离感」。 */
+.np-today-list {
+	margin-top: 16px;
 }
 
-/* 关键：整个热点要闻区块（含下方蓝点列表）行距视觉一致。
-   视觉一致 = 相邻两行文字的墨迹空隙相等，而非行高数值相等：
-   字号不同时若用同一行高数值，大字留白紧、小字留白松，必然不齐。
-   做法：所有行共用 line-height:28px 并 flex 垂直居中，
-   行高按「字号 + 20px 空隙」取值——墨迹到行上下边缘各 10px，
-   于是任意相邻两行的墨迹空隙恒为 20px：
-   - 大字 18px → 行高 38px；小字 16px → 行高 36px；蓝点小字 14px → 行高 34px
-   行高数值故意不同，视觉间距才能相同。 */
-.np-hotnews .wp-block-post {
+.np-today-list .wp-block-post {
 	list-style: none;
 	display: flex;
 	align-items: center;
 	min-height: 36px;
 	padding: 0;
 	margin: 0;
+	position: relative;
 }
 
-.np-hotnews .wp-block-post:first-of-type {
-	min-height: 38px;
-}
-
-.np-hotnews .wp-block-post::before {
+.np-today-list .wp-block-post::before {
 	content: "";
 	flex: 0 0 5px;
 	width: 5px;
@@ -647,7 +637,7 @@ a {
 	border-radius: 50%;
 }
 
-.np-hotnews .wp-block-post-title {
+.np-today-list .wp-block-post-title {
 	flex: 1;
 	margin: 0 !important;
 	padding: 0;
@@ -656,79 +646,17 @@ a {
 	line-height: 28px !important;
 }
 
-.np-hotnews .wp-block-post:first-of-type .wp-block-post-title {
-	font-size: 18px !important;
-	font-weight: 700 !important;
-}
-
-.np-hotnews .wp-block-post-title a {
+.np-today-list .wp-block-post-title a {
 	color: var(--np-ink);
 }
 
-.np-hotnews .wp-block-post-title a:hover {
+.np-today-list .wp-block-post-title a:hover {
 	color: var(--np-link);
 	text-decoration: underline;
 }
 
-/* 蓝点焦点列表：与红点头条同一视觉节奏（墨迹空隙恒 20px） */
-.np-focuslist {
-	margin-top: 0;
-}
-
-.np-focuslist .wp-block-post {
-	list-style: none;
-	position: relative;
-	padding-left: 13px;
-	margin: 0;
-	display: flex;
-	align-items: center;
-	min-height: 34px;
-}
-
-.np-focuslist .wp-block-post:first-of-type {
-	min-height: 36px;
-}
-
-.np-focuslist .wp-block-post-title {
-	margin: 0;
-	font-size: 14px;
-	font-weight: 400;
-	line-height: 28px;
-}
-
-.np-focuslist .wp-block-post-title::before {
-	content: "";
-	position: absolute;
-	left: 0;
-	top: 50%;
-	transform: translateY(-50%);
-	width: 3px;
-	height: 3px;
-	background: var(--np-blue-400);
-}
-
-.np-focuslist .wp-block-post:first-of-type .wp-block-post-title {
-	font-weight: 700;
-	font-size: 16px;
-}
-
-.np-focuslist .wp-block-post-title a {
-	color: var(--np-ink);
-}
-
-.np-focuslist .wp-block-post-title a:hover {
-	color: var(--np-link);
-	text-decoration: underline;
-}
-
-/* 行分隔线（绝对定位，不参与布局，避免破坏上面已调好的行距节奏） */
-.np-hotnews .wp-block-post,
-.np-focuslist .wp-block-post {
-	position: relative;
-}
-
-.np-hotnews .wp-block-post:not(:last-of-type)::after,
-.np-focuslist .wp-block-post:not(:last-of-type)::after {
+/* 行分隔线（绝对定位，不参与布局，保持行距节奏） */
+.np-today-list .wp-block-post:not(:last-of-type)::after {
 	content: "";
 	position: absolute;
 	left: 14px;
@@ -737,9 +665,30 @@ a {
 	border-top: 1px dashed #eef1f5;
 }
 
-.np-hotnews .wp-block-post:hover .wp-block-post-title a,
-.np-focuslist .wp-block-post:hover .wp-block-post-title a {
+.np-today-list .wp-block-post:hover .wp-block-post-title a {
 	color: var(--np-link);
+}
+
+/* 列表底部「查看更多 ›」：右对齐，品牌橙 */
+.np-today-more {
+	margin: 12px 0 0;
+	text-align: right;
+	font-size: 13px;
+}
+
+.np-today-more a {
+	color: var(--np-accent);
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.np-today-more a:hover {
+	text-decoration: underline;
+}
+
+/* 高度自适应：默认只露前 12 条，其余由 JS 按右列（轮播+广告）高度展开/收起 */
+.np-today-list .wp-block-post:nth-child(n + 13) {
+	display: none;
 }
 
 /* ================= 推荐信息流（左栏） ================= */
@@ -1886,6 +1835,23 @@ a {
 		margin: 0 10px;
 		vertical-align: middle;
 	}
+
+	/* 区块标题移动端：避免长中英文（如「96871直播中心（湘潭）」）横向溢出 */
+	.np-sec-title {
+		font-size: 17px;
+		line-height: 24px;
+		flex-wrap: wrap;
+	}
+
+	.np-sec-en {
+		font-size: 11px;
+		letter-spacing: 0.04em;
+	}
+
+	/* 板块间距在移动端收敛 */
+	.np-section {
+		margin-bottom: 20px;
+	}
 }
 
 /* ================= 广告位（np_ad 短代码输出） ================= */
@@ -2051,6 +2017,25 @@ a {
 	}
 
 	.np-foot-brand {
+		text-align: left;
+	}
+}
+
+/* ================= 手机端（≤480px）微调 ================= */
+@media (max-width: 480px) {
+	/* 英文副标题独占一行，与中文左对齐（避开 28px 图标 + 9px 间距） */
+	.np-sec-en {
+		flex-basis: 100%;
+		margin-left: 37px;
+	}
+
+	/* TODAY 合并列表字号略收，窄屏更透气 */
+	.np-today-list .wp-block-post-title {
+		font-size: 15px !important;
+	}
+
+	/* 「查看更多 ›」左对齐更贴合窄屏阅读动线 */
+	.np-today-more {
 		text-align: left;
 	}
 }

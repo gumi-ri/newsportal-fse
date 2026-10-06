@@ -88,15 +88,16 @@
 })();
 
 /**
- * 首页两列高度配平：[[最新资讯]] 固定露出前 8 条（文章 1-8），
- * [[更多资讯]] 的候选池已扩到 16 条（文章 9-24），这里按需露出条数，
- * 使右列内容高度与左列大致齐平 —— 矮列不再被拉伸出空白，也不补占位板。
- * 露出的始终是按时间倒序的连续片段，与左列不重叠。
+ * 首页高度配平（两处）：
+ * 1) 各本地板块 [[最新资讯]] 固定前 8 条，[[更多资讯]] 候选池扩到 16 条，
+ *    按需露出条数使右列 ≈ 左列，矮列不再被拉伸空白、也不补占位板。
+ * 2) TODAY 板块：左列(热点要闻列表) 与 右列(轮播+广告) 高度配平，
+ *    列表按需露出（默认 12 条，最多 22），避免左列矮一截或右列下方空白。
  */
 (function () {
 	'use strict';
 
-	// 首条是「图文卡」(display:block)，其余是「列表行」(display:flex)
+	// 本地板块首条是「图文卡」(display:block)，其余是「列表行」(display:flex)
 	function showRow(el, i) {
 		el.style.display = (i === 0) ? 'block' : 'flex';
 	}
@@ -133,7 +134,40 @@
 		}
 	}
 
-	function init() { npBalanceCols(); }
+	// TODAY 板块：左列热点要闻列表 配平 右列(轮播 + 广告)
+	function npBalancePortal() {
+		var portal = document.querySelector('.np-portal');
+		if (!portal) return;
+		var left = portal.querySelector('.np-col-left');
+		var right = portal.querySelector('.np-col-right');
+		var list = left ? left.querySelector('.np-today-list') : null;
+		if (!left || !right || !list) return;
+		var rows = list.querySelectorAll('.wp-block-post');
+		if (!rows.length) return;
+
+		// 收起全部，量出右列（目标）高度
+		for (var k = 0; k < rows.length; k++) rows[k].style.display = 'none';
+		var rightH = right.getBoundingClientRect().height;
+		var TOL = 6;
+		var shown = 0;
+
+		for (var i = 0; i < rows.length; i++) {
+			rows[i].style.display = 'flex'; // TODAY 全是列表行
+			shown++;
+			if (left.getBoundingClientRect().height >= rightH - TOL) break;
+		}
+
+		// 保底：至少露出 6 条
+		while (shown < 6 && shown < rows.length) {
+			rows[shown].style.display = 'flex';
+			shown++;
+		}
+	}
+
+	function init() {
+		npBalanceCols();
+		npBalancePortal();
+	}
 
 	if (document.readyState === 'loading') {
 		document.addEventListener('DOMContentLoaded', init);
@@ -141,14 +175,28 @@
 		init();
 	}
 	// 图片/字体加载完高度可能微调，再配平一次
-	window.addEventListener('load', npBalanceCols);
+	window.addEventListener('load', init);
 	if (document.fonts && document.fonts.ready) {
-		document.fonts.ready.then(npBalanceCols);
+		document.fonts.ready.then(init);
 	}
+	// 轮播/广告等懒加载图片加载完会改变右列高度，加载后重算
+	var imT;
+	function onImgLoad() {
+		clearTimeout(imT);
+		imT = setTimeout(init, 120);
+	}
+	var imgs = document.querySelectorAll('.np-portal img');
+	for (var n = 0; n < imgs.length; n++) {
+		if (!imgs[n].complete) imgs[n].addEventListener('load', onImgLoad);
+		imgs[n].addEventListener('error', onImgLoad);
+	}
+	// 兜底：延迟再配平，覆盖懒加载/异步广告导致的首屏误测
+	setTimeout(init, 1500);
+	setTimeout(init, 3000);
 	// 视口变化（旋转/缩放）后重新配平
 	var rt;
 	window.addEventListener('resize', function () {
 		clearTimeout(rt);
-		rt = setTimeout(npBalanceCols, 200);
+		rt = setTimeout(init, 200);
 	});
 })();

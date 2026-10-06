@@ -32,7 +32,7 @@ function newsportal_enqueue_assets() {
 		'newsportal-extra',
 		get_template_directory_uri() . '/assets/style.css',
 		array(),
-		'2.5.8'
+		'2.5.9'
 	);
 }
 add_action( 'wp_enqueue_scripts', 'newsportal_enqueue_assets', PHP_INT_MAX );
@@ -71,7 +71,7 @@ function newsportal_enqueue_app() {
 		'newsportal-app',
 		get_template_directory_uri() . '/assets/app.js',
 		array(),
-		'1.0.3',
+		'1.0.4',
 		true
 	);
 	// npData 仅文章页需要（点赞/分享用）；首页加载 app.js 是为了两列高度配平
@@ -113,8 +113,8 @@ add_shortcode( 'np_article_source', 'np_article_source_shortcode' );
  *
  * 精准识别（不再靠 perPage/offset 形状匹配，避免新增同形状查询被误命中）：
  *   1) render_block_data 钩子在每个区块渲染前，记录当前 core/query 区块的 className；
- *   2) 该区块的 WP_Query 触发 pre_get_posts 时，若 className 命中两个「最新」列表
- *      （np-hotnews / np-focuslist）就设 tag__not_in=[27]。
+ *   2) 该区块的 WP_Query 触发 pre_get_posts 时，若 className 命中「最新」列表
+ *      （np-hotnews / np-focuslist / np-today-list）就设 tag__not_in=[27]。
  *   其它任何 Query Loop（即使同样 6/0 或 8/6）className 不同，不会被误命中。
  * 依赖：front-page.html 中这两个 query 区块的 attrs 带 className（已写入）。
  */
@@ -130,7 +130,7 @@ function np_exclude_tuwen_from_tag_lists( $query ) {
 	if ( is_admin() || $query->is_main_query() ) {
 		return;
 	}
-	$targets = array( 'np-hotnews', 'np-focuslist' );
+	$targets = array( 'np-hotnews', 'np-focuslist', 'np-today-list' );
 	$current = isset( $GLOBALS['np_current_query_class'] ) ? $GLOBALS['np_current_query_class'] : '';
 	if ( ! in_array( $current, $targets, true ) ) {
 		return;
