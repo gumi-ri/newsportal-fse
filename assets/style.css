@@ -609,64 +609,16 @@ a {
 	padding-left: 40px;
 }
 
-/* TODAY 热点要闻：原「橙点头条(6) + 蓝点焦点(8)」两个隔离子列表已合并为
-   单一列表（np-today-list，perPage 22）。统一处理 —— 每行橙点 + 16px 正文 +
-   统一行距（墨迹空隙恒 20px），去除两套字号/点色造成的「隔离感」。 */
+/* TODAY 列表已与下方「本地新闻」列表统一为同一套
+   「序号/方点 + 双级标题」体系（见「首页统一列表」段）。此处仅保留
+   列表外距、高度自适应与底部「查看更多 ›」。 */
 .np-today-list {
 	margin-top: 16px;
 }
 
-.np-today-list .wp-block-post {
-	list-style: none;
-	display: flex;
-	align-items: center;
-	min-height: 36px;
-	padding: 0;
-	margin: 0;
-	position: relative;
-}
-
-.np-today-list .wp-block-post::before {
-	content: "";
-	flex: 0 0 5px;
-	width: 5px;
-	height: 5px;
-	align-self: center;
-	margin-right: 9px;
-	background: var(--np-accent);
-	border-radius: 50%;
-}
-
-.np-today-list .wp-block-post-title {
-	flex: 1;
-	margin: 0 !important;
-	padding: 0;
-	font-size: 16px !important;
-	font-weight: 400 !important;
-	line-height: 28px !important;
-}
-
-.np-today-list .wp-block-post-title a {
-	color: var(--np-ink);
-}
-
-.np-today-list .wp-block-post-title a:hover {
-	color: var(--np-link);
-	text-decoration: underline;
-}
-
-/* 行分隔线（绝对定位，不参与布局，保持行距节奏） */
-.np-today-list .wp-block-post:not(:last-of-type)::after {
-	content: "";
-	position: absolute;
-	left: 14px;
-	right: 0;
-	bottom: 0;
-	border-top: 1px dashed #eef1f5;
-}
-
-.np-today-list .wp-block-post:hover .wp-block-post-title a {
-	color: var(--np-link);
+/* 高度自适应：默认只露前 12 条，其余由 JS 按右列（轮播+广告）高度展开/收起 */
+.np-today-list .wp-block-post:nth-child(n + 13) {
+	display: none;
 }
 
 /* 列表底部「查看更多 ›」：右对齐，品牌橙 */
@@ -684,11 +636,6 @@ a {
 
 .np-today-more a:hover {
 	text-decoration: underline;
-}
-
-/* 高度自适应：默认只露前 12 条，其余由 JS 按右列（轮播+广告）高度展开/收起 */
-.np-today-list .wp-block-post:nth-child(n + 13) {
-	display: none;
 }
 
 /* ================= 推荐信息流（左栏） ================= */
@@ -934,95 +881,109 @@ a {
 	flex-direction: column;
 }
 
-/* 板块内的「最新资讯 / 更多资讯」列表
-   —— 2026-10-06 参照青大官网通知公告区改版：
-      左侧日期条 + 奇偶行斑马纹 + 悬停浅蓝底，长列表可高速扫读。
-      行距统一用「等高 padding + 底部细线」，不靠 margin 堆叠，避免间距忽大忽小。 */
+/* =========================================================================
+   首页统一列表（2026-10-06 v11.6）：最新资讯 / 更多资讯 / TODAY 三套列表
+   统一为同一套「序号/方点 + 双级标题」体系。
+   · 标题只保留两级：强调（首条图文大卡 18px/600）= 一般（其余 16px/400/28px）。
+   · 模板已删除标题前日期（wp:post-date）。
+   · 每列表前 5 条递增序号（品牌蓝方角标），第 6 条起简洁方点（蓝点）。
+   · 行距/间距统一（10px 纵向 padding + 1px 虚线分隔），去除原斑马纹与大小字隔离。
+   ========================================================================= */
+/* 计数器：每个列表（.wp-block-post-template）各自从 1 计 */
+.np-local-focus .wp-block-post-template,
+.np-local-zixun .wp-block-post-template,
+.np-today-list .wp-block-post-template {
+	counter-reset: np-rank;
+}
+
+/* 列表项统一基类（focus / zixun / today 共用） */
 .np-local-focus .wp-block-post,
-.np-local-zixun .wp-block-post {
+.np-local-zixun .wp-block-post,
+.np-today-list .wp-block-post {
 	list-style: none;
 	margin: 0;
 	display: flex;
-	align-items: flex-start;
-	gap: 12px;
-	padding: 11px 12px;
-	border-bottom: 1px solid var(--np-line2);
+	align-items: center;
+	gap: 10px;
+	padding: 10px 0;
+	border-bottom: 1px dashed var(--np-line2);
+	position: relative;
+	counter-increment: np-rank;
 	transition: background 0.15s ease;
 }
 
-/* 斑马纹：从「第 2 行」开始交替。
-   首行是图文大卡（自身白底），若仍按 odd 上色会导致大卡后连续两行都是白底、
-   斑马节奏断档 —— 故此处用 even。 */
-.np-local-focus .wp-block-post:nth-child(even),
-.np-local-zixun .wp-block-post:nth-child(even) {
-	background: var(--np-zebra);
-}
-
 .np-local-focus .wp-block-post:hover,
-.np-local-zixun .wp-block-post:hover {
+.np-local-zixun .wp-block-post:hover,
+.np-today-list .wp-block-post:hover {
 	background: var(--np-blue-100);
 }
 
-/* 普通行参与伸缩：两列等高后，余量由行高均匀吸收（每行最多十几 px，肉眼几不可察），
-   同时把行内垂直对齐改为居中，行变高时日期条与标题仍居中对齐、不吊在顶部。 */
-.np-local-focus .wp-block-post:not(:first-of-type),
-.np-local-zixun .wp-block-post:not(:first-of-type) {
-	flex: 1 1 auto;
+/* 前 5 条：递增序号（品牌蓝方角标） */
+.np-local-focus .wp-block-post:nth-child(-n+5)::before,
+.np-local-zixun .wp-block-post:nth-child(-n+5)::before,
+.np-today-list .wp-block-post:nth-child(-n+5)::before {
+	content: counter(np-rank);
+	flex: 0 0 22px;
+	height: 22px;
+	display: inline-flex;
 	align-items: center;
-}
-
-/* 日期条 */
-.np-list-date {
-	flex: 0 0 auto;
+	justify-content: center;
+	background: var(--np-brand);
+	color: #fff;
 	font-size: 12px;
-	color: var(--np-ink2);
-	background: #fff;
-	border: 1px solid var(--np-line);
-	border-radius: 4px;
-	padding: 2px 7px;
-	line-height: 18px;
-	font-variant-numeric: tabular-nums;
-	letter-spacing: 0.02em;
+	font-weight: 700;
+	border-radius: 5px;
+	margin-right: 2px;
 }
 
+/* 第 6 条起：简洁方点（蓝点，居中于 22px 槽，与序号对齐） */
+.np-local-focus .wp-block-post:nth-child(n+6)::before,
+.np-local-zixun .wp-block-post:nth-child(n+6)::before,
+.np-today-list .wp-block-post:nth-child(n+6)::before {
+	content: "";
+	flex: 0 0 22px;
+	height: 22px;
+	background-image: linear-gradient(var(--np-blue-400), var(--np-blue-400));
+	background-size: 6px 6px;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+/* 标题 —— 一般（除首条外所有行 + TODAY 全部） */
 .np-local-focus .np-list-title,
-.np-local-zixun .np-list-title {
+.np-local-zixun .np-list-title,
+.np-today-list .wp-block-post-title {
 	flex: 1;
 	min-width: 0;
 	margin: 0;
-	font-size: 14px;
-	font-weight: 400;
-	line-height: 20px;
-}
-
-.np-list-title a {
+	font-size: 16px !important;
+	font-weight: 400 !important;
+	line-height: 28px !important;
 	color: var(--np-ink);
 }
 
-.np-list-title a:hover {
+.np-list-title a,
+.np-today-list .wp-block-post-title a {
+	color: var(--np-ink);
+}
+
+.np-list-title a:hover,
+.np-today-list .wp-block-post-title a:hover {
 	color: var(--np-link);
 	text-decoration: underline;
 }
 
-/* ---------- 两列首条：图文大卡（左列为「主图」，右列略小以形成主次） ---------- */
+/* ---------- 两列首条：图文大卡（强调项，= 序号 #1） ---------- */
 /* 特色图默认隐藏：只有 :first-of-type 才展开，其余条目保持纯文字行 */
 .np-list-thumb {
 	display: none;
 }
 
-/* 首条改为「独立卡片」：白底 + 浅蓝描边 + 轻投影。两处调整解决「不好看」：
-   1) 日期条由「与标题并排」改为「独立一行」——原先长标题换行后第二行被日期条顶出去，
-      左边缘参差不齐；日期独立后标题拿到整行宽度，块面整齐。
-   2) 卡片化后，首条与下方斑马纹列表之间有了明确的主次与边界，
-      不再是一行大字「悬」在一片细行之上。
-   内边距 12px 与列表行一致，保证左边缘对齐。 */
 .np-local-focus .wp-block-post:first-of-type,
 .np-local-zixun .wp-block-post:first-of-type {
 	display: block;
-	/* 11px 内边距 + 1px 描边 = 内容起点 12px，与列表行的 12px 内边距严格对齐 */
 	padding: 11px;
-	/* !important：同 .np-sec-head，列表项是布局容器的直接子元素，margin 会被清零 */
-	margin: 0 0 10px !important;
+	margin: 0 0 12px !important;
 	background: #fff;
 	border: 1px solid var(--np-blue-100);
 	border-radius: var(--np-radius);
@@ -1039,8 +1000,7 @@ a {
 	background: var(--np-grad-soft);
 }
 
-/* 首条图片改为「固定高度」而非 max-height：
-   max-height 下每篇按各自长宽比出高度（实测 77~343px 不等），是两列高度差的最大来源。 */
+/* 首条图片固定高度（保留左主 200 / 右次 160 的主次差） */
 .np-local-focus .wp-block-post:first-of-type .np-list-thumb img {
 	display: block;
 	width: 100%;
@@ -1055,37 +1015,31 @@ a {
 	object-fit: cover;
 }
 
-/* 首条图片固定高度（保留左主右次的主次差），**不再补占位板**：
-   两列高度改由「自适应露出条数」配平（见 assets/app.js 的 npBalanceCols）。
-
-   右列候选池：模板里「更多资讯」的 query perPage 提到 16（文章 9-24），
-   本规则默认只露出前 8 条（避免 JS 执行前闪出 16 条），其余由 JS 按需展开/收起
-   —— 与左列（文章 1-8）始终连续、不重叠。 */
-.np-local-zixun .wp-block-post:nth-child(n + 9) {
-	display: none;
-}
-
-.np-local-focus .wp-block-post:first-of-type .np-list-date,
-.np-local-zixun .wp-block-post:first-of-type .np-list-date {
-	display: inline-block;
-	margin: 0 0 7px;
-	background: var(--np-brand);
-	border-color: var(--np-brand);
-	color: #fff;
-}
-
-.np-local-focus .wp-block-post:first-of-type .np-list-title {
-	display: block;
-	font-size: 17px;
-	font-weight: 700;
-	line-height: 1.5;
-}
-
+/* 首条标题 = 强调（18px/600）；序号 #1 以左上角标形式压在图上
+   —— 必须 !important：通用「一般」规则也带了 !important，否则会被其压回 16px/400，两级区分失效 */
+.np-local-focus .wp-block-post:first-of-type .np-list-title,
 .np-local-zixun .wp-block-post:first-of-type .np-list-title {
 	display: block;
-	font-size: 15px;
-	font-weight: 700;
-	line-height: 1.45;
+	font-size: 18px !important;
+	font-weight: 600 !important;
+	line-height: 1.5 !important;
+}
+
+/* 首条（:first-of-type 即 :nth-child(1)）的序号角标：由行内方标改为左上角标签 */
+.np-local-focus .wp-block-post:first-of-type::before,
+.np-local-zixun .wp-block-post:first-of-type::before {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: 0;
+	border-radius: 0 0 6px 0;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.22);
+	z-index: 2;
+}
+
+/* 更多资讯高度自适应：默认只露前 8 条（避免 JS 前闪 16 条），其余由 JS 展开 */
+.np-local-zixun .wp-block-post:nth-child(n + 9) {
+	display: none;
 }
 
 /* 原「新闻图片」列样式已随该列模板一并移除（2026-10-06 重排为两列，
@@ -2029,9 +1983,18 @@ a {
 		margin-left: 37px;
 	}
 
-	/* TODAY 合并列表字号略收，窄屏更透气 */
+	/* 首页统一列表：窄屏「一般」标题 15px、「强调」首条 17px，更透气 */
+	.np-local-focus .np-list-title,
+	.np-local-zixun .np-list-title,
 	.np-today-list .wp-block-post-title {
 		font-size: 15px !important;
+	}
+
+	.np-local-focus .wp-block-post:first-of-type .np-list-title,
+	.np-local-zixun .wp-block-post:first-of-type .np-list-title {
+		font-size: 17px !important;
+		font-weight: 600 !important;
+		line-height: 1.4 !important;
 	}
 
 	/* 「查看更多 ›」左对齐更贴合窄屏阅读动线 */
