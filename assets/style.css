@@ -957,12 +957,31 @@ a {
 	display: grid;
 	grid-template-columns: minmax(0, 1.32fr) minmax(0, 1fr);
 	column-gap: var(--np-gap);
-	align-items: start;
+	/* stretch（而非 start）：两列等高，短的一列靠列表行吸收余量，
+	   避免矮列下方出现大片空白（实测最大列高差曾达 266px） */
+	align-items: stretch;
 }
 
+/* 列 → 列表两级 flex 贯通，让「列表行」成为可伸缩的余量吸收器 */
 .np-local-focus-col,
 .np-local-zixun-col {
 	min-width: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.np-local-focus,
+.np-local-zixun {
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
+}
+
+.np-local-focus .wp-block-post-template,
+.np-local-zixun .wp-block-post-template {
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
 }
 
 /* 板块内的「最新资讯 / 更多资讯」列表
@@ -992,6 +1011,14 @@ a {
 .np-local-focus .wp-block-post:hover,
 .np-local-zixun .wp-block-post:hover {
 	background: var(--np-blue-100);
+}
+
+/* 普通行参与伸缩：两列等高后，余量由行高均匀吸收（每行最多十几 px，肉眼几不可察），
+   同时把行内垂直对齐改为居中，行变高时日期条与标题仍居中对齐、不吊在顶部。 */
+.np-local-focus .wp-block-post:not(:first-of-type),
+.np-local-zixun .wp-block-post:not(:first-of-type) {
+	flex: 1 1 auto;
+	align-items: center;
 }
 
 /* 日期条 */
@@ -1062,20 +1089,68 @@ a {
 	background: var(--np-grad-soft);
 }
 
+/* 首条图片改为「固定高度」而非 max-height：
+   max-height 下每篇按各自长宽比出高度（实测 77~343px 不等），是两列高度差的最大来源。 */
 .np-local-focus .wp-block-post:first-of-type .np-list-thumb img {
 	display: block;
 	width: 100%;
-	height: auto;
-	max-height: 252px;
+	height: 200px;
 	object-fit: cover;
 }
 
 .np-local-zixun .wp-block-post:first-of-type .np-list-thumb img {
 	display: block;
 	width: 100%;
-	height: auto;
-	max-height: 140px;
+	height: 160px;
 	object-fit: cover;
+}
+
+/* 首条「无特色图」→ 补一块与有图卡片等高的「品牌占位板」：
+   否则无图板块的首条会比有图板块矮一大截（实测 77 vs 343），两列高度差被进一步放大。
+   样式上只用「极淡的品牌蓝渐变 + 居中虚线图片框」，明确读作"此处待配图"；
+   不要用斜纹 —— 斜纹看起来像"缺失图"的警示纹，反而更刺眼。
+   注意：两列都要写全属性（曾因右列只写 height 导致占位板不渲染）。 */
+.np-local-focus .wp-block-post:first-of-type:not(:has(.np-list-thumb)),
+.np-local-zixun .wp-block-post:first-of-type:not(:has(.np-list-thumb)) {
+	position: relative;
+}
+
+.np-local-focus .wp-block-post:first-of-type:not(:has(.np-list-thumb))::before,
+.np-local-zixun .wp-block-post:first-of-type:not(:has(.np-list-thumb))::before {
+	content: "";
+	display: block;
+	height: 200px;
+	margin-bottom: 10px;
+	border-radius: 8px;
+	border: 1px solid var(--np-blue-100);
+	background: linear-gradient(135deg, #eef4ff 0%, #f9fcff 100%);
+}
+
+.np-local-zixun .wp-block-post:first-of-type:not(:has(.np-list-thumb))::before {
+	height: 160px;
+}
+
+/* 占位板中央的虚线图片框 */
+.np-local-focus .wp-block-post:first-of-type:not(:has(.np-list-thumb))::after,
+.np-local-zixun .wp-block-post:first-of-type:not(:has(.np-list-thumb))::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 68px;
+	height: 52px;
+	border-radius: 8px;
+	border: 2px dashed rgba(15, 79, 224, 0.2);
+	pointer-events: none;
+}
+
+/* 卡片内边距 11px + 板高一半 = 板的垂直中心 */
+.np-local-focus .wp-block-post:first-of-type:not(:has(.np-list-thumb))::after {
+	top: 111px;
+}
+
+.np-local-zixun .wp-block-post:first-of-type:not(:has(.np-list-thumb))::after {
+	top: 91px;
 }
 
 .np-local-focus .wp-block-post:first-of-type .np-list-date,
