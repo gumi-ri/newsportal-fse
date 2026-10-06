@@ -60,8 +60,9 @@ newsportal-fse/
 │   ├── style.css        附加像素级样式
 │   └── app.js           文章页点赞/分享交互
 ├── parts/
-│   ├── header.html      头部（Logo + 搜索栏 + 导航）
-│   └── footer.html      页脚
+│   ├── header.html      头部（Logo + 品牌副标题 + 搜索栏 + 导航）
+│   ├── footer.html      页脚
+│   └── hot-words.html   热搜词瓷砖（单源，首页/404 以 template-part 引用）
 ├── patterns/            区块图案（模板中已展开为普通区块）
 └── templates/
     ├── front-page.html  首页

@@ -17,3 +17,7 @@ Thumbs.db
 # 构建产物
 *.tar.gz
 *.zip
+
+# 本地生成素材 / 运行时目录（不纳入版本库）
+vibe_images/
+.box-agent/

@@ -108,9 +108,9 @@ a {
 	max-width: 984px;
 	margin: 0 auto;
 	display: grid !important;
-	grid-template-columns: auto 1fr auto;
+	grid-template-columns: auto auto 1fr auto;
 	align-items: center;
-	gap: 22px;
+	column-gap: 14px;
 }
 
 .np-header .wp-block-site-title {
@@ -142,8 +142,49 @@ a {
 	width: auto;
 }
 
-.np-searchbar .wp-block-search {
+/* logo 右侧品牌副标题「|湘潭工业信息大脑」+ 下方「96871直播中心（湘潭）出品」 */
+.np-brand {
 	grid-column: 2;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	white-space: nowrap;
+	line-height: 1;
+}
+
+.np-brand-divider {
+	color: #ccd4df;
+	font-weight: 300;
+	font-size: 26px;
+	margin-right: 10px;
+}
+
+.np-brand-text {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	line-height: 1.2;
+}
+
+.np-brand-name {
+	font-family: "YouYuan", "幼圆", "Yuanti SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+	font-weight: 700;
+	font-size: 24px;
+	letter-spacing: 1px;
+	color: #555;
+}
+
+.np-brand-sub {
+	font-family: "YouYuan", "幼圆", "Yuanti SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+	font-weight: 400;
+	font-size: 13px;
+	letter-spacing: 0.5px;
+	color: #8a8a8a;
+}
+
+.np-searchbar .wp-block-search {
+	grid-column: 3;
+	justify-self: end;
 	width: 100%;
 	max-width: 600px;
 	margin: 0;
@@ -234,7 +275,7 @@ a {
 
 /* 看视频按钮（橙色渐变胶囊，链到抖音主页） */
 .np-video {
-	grid-column: 3;
+	grid-column: 4;
 	margin: 0;
 	white-space: nowrap;
 }
@@ -1429,6 +1470,7 @@ a {
 		grid-template-columns: minmax(0, 1fr) auto;
 		grid-template-areas:
 			"logo video"
+			"brand video"
 			"search search";
 		gap: 12px;
 		padding: 0 12px;
@@ -1445,6 +1487,26 @@ a {
 		max-width: 100%;
 		width: auto;
 		height: auto;
+	}
+
+	/* 品牌副标题：换到 logo 下方一行，字号缩小 */
+	.np-brand {
+		grid-area: brand;
+	}
+
+	.np-brand-divider {
+		font-size: 18px;
+		margin-right: 6px;
+	}
+
+	.np-brand-name {
+		font-size: 16px;
+		letter-spacing: 0.5px;
+	}
+
+	.np-brand-sub {
+		font-size: 11px;
+		letter-spacing: 0.3px;
 	}
 
 	.np-video {
@@ -1464,6 +1526,7 @@ a {
 
 	.np-searchbar .wp-block-search {
 		grid-area: search;
+		justify-self: stretch;
 		max-width: 100%;
 	}
 
@@ -1526,4 +1589,53 @@ a {
 		margin: 0 10px;
 		vertical-align: middle;
 	}
+}
+
+/* ================= 广告位（np_ad 短代码输出） ================= */
+/* 通用隐藏工具：给 wp:group 加 .np-hidden 即可整块从前台与编辑器隐藏 */
+.np-hidden {
+	display: none !important;
+}
+
+.np-ads {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	margin-top: 4px;
+}
+
+.np-ad-slot {
+	margin: 0;
+}
+
+.np-ad-slot .np-ad-link {
+	display: block;
+	width: 100%;
+	border-radius: 8px;
+	overflow: hidden;
+	border: 1px solid #f0f0f0;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+	background: #f7f8fa;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.np-ad-slot .np-ad-link:hover {
+	border-color: #d8dcf0;
+	box-shadow: 0 4px 16px rgba(78, 110, 242, 0.12);
+}
+
+.np-ad-slot .np-ad-img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.np-ad-slot .np-ad-placeholder {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 120px;
+	color: #999;
+	font-size: 14px;
+	letter-spacing: 2px;
 }
